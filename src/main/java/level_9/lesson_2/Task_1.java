@@ -33,11 +33,11 @@ public class Task_1 {
     }
 
     public static StackTraceElement[] method5() {
-//        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-//        for (StackTraceElement el:
-//             elements) {
-//            System.out.println(el);
-//        }
+        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+        for (StackTraceElement el:
+             elements) {
+            System.out.println(el);
+        }
         return Thread.currentThread().getStackTrace();//напишите тут ваш код
     }
 }
