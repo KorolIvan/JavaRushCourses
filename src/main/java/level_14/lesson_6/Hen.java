@@ -6,7 +6,7 @@ package level_14.lesson_6;
 public abstract class Hen {
     public abstract int getCountOfEggsPerMonth();
 
-    public String getDescription() {
+    String getDescription() {
         return "Я - курица.";
     }
 }
