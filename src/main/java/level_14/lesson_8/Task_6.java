@@ -14,7 +14,19 @@ public class Task_6 {
         Movie movie = null;
         while (true) {
             key = reader.readLine();
-
+            if (key.equals("soapOpera")){
+                movie = MovieFactory.getMovie(key);
+                System.out.println(movie.getClass().getSimpleName());
+            }else if(key.equals("cartoon")){
+                movie = MovieFactory.getMovie(key);
+                System.out.println(movie.getClass().getSimpleName());
+            }else if (key.equals("thriller")){
+                movie = MovieFactory.getMovie(key);
+                System.out.println(movie.getClass().getSimpleName());
+            }else {
+                movie = MovieFactory.getMovie(key);
+                break;
+            }
         }
         /*
 8 Создать переменную movie класса Movie и для каждой введенной строки(ключа):
