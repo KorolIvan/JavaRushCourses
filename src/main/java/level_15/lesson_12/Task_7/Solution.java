@@ -2,7 +2,6 @@ package level_15.lesson_12.Task_7;
 
 import java.io.*;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
