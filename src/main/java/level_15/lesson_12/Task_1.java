@@ -4,33 +4,39 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * @author by Ivan Korol on 11/8/2017.
+ )*/
 public class Task_1 {
     public static void main(String[] args) throws IOException {
+        //напиште тут ваш код
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String s = null;
-        int forInt = 0;
-        //short forShort = 0;
-        double forDouble = 0.0;
-
-        //forShort = Short.parseShort(s);
-        while (true) {
+        while(true) {
             s = reader.readLine();
-            forInt = Integer.parseInt(s);
-            if (s.equals("exit"))
+            if(s.equals("exit")){
                 break;
+            }
+            try {
+                if (s.contains(".")) {
 
-            if(s.contains(".")){
-                forDouble = Double.parseDouble(s);
-                print(forDouble);
-            }else if(forInt > 0 && forInt <128){
-                print(forInt);
-            }else if(forInt <= 0 && forInt >= 128){
-                print(forInt);
-            }else {
+                    print(Double.parseDouble(s));
+
+                } else if (Integer.parseInt(s) <= 0 || Integer.parseInt(s) >= 128) {
+
+                    print(Integer.parseInt(s));
+
+                }else if (Short.parseShort(s) > 0 && Short.parseShort(s) < 128) {
+
+                    print(Short.parseShort(s));
+
+                }
+            }catch (NumberFormatException e) {
                 print(s);
             }
+
         }
-        //напиште тут ваш код
+
     }
 
     public static void print(Double value) {
