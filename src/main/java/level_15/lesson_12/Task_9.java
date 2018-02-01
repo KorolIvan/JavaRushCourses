@@ -13,16 +13,41 @@ import java.util.List;
 public class Task_9 {
     public static void main(String[] args) throws IOException{
         //add your code here
-        //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         //String s = reader.readLine();
-        URL url = new URL("http://javarush.ru/alpha/index.html?lvl=15&view&name=Amigo");
-        System.out.println(url.getQuery());
-        String val = url.getQuery().replace("&", " ");
-        System.out.println(val);
-       String[] s = val.split("= |");
-        for (String sr:
-             s) {
-            System.out.println(sr);
+        URL url = new URL(reader.readLine());
+        //System.out.println(url.getQuery());
+        //String val = url.getQuery().replace("&", " ");
+        String val = url.getQuery();
+        String[] parts = val.split("&");
+        String[] result = new String[parts.length];
+
+
+        for (int i = 0; i < parts.length; i++) {
+
+            if (parts[i].contains("obj")) {
+                result[i] = parts[i].substring(0, parts[i].indexOf("="));
+                System.out.print(result[i] + " ");
+            } else if (parts[i].contains("=")) {
+                result[i] = parts[i].substring(0, parts[i].indexOf("="));
+                System.out.print(result[i] + " ");
+
+            } else {result[i] = parts[i];
+                System.out.print(result[i] + " ");
+            }
+        }
+        System.out.println();
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].contains("obj")) {
+                String objResult;
+                objResult = parts[i].substring(parts[i].indexOf("=") + 1);
+
+                try {
+                    alert(Double.parseDouble(objResult));
+                } catch (Exception e) {
+                    alert(objResult);
+                }
+            }
         }
         //reader.close();
 
