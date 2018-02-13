@@ -13,8 +13,6 @@ public class Task_5 {
         t2.interrupt();
         t1.join();
 
-//        t1.interrupt();
-//        t2.interrupt();
     }
 
     public static class T1 extends Thread {
