@@ -3,7 +3,7 @@ package level_8.lessons_9;
 import java.util.ArrayList;
 
 public class Task_6 {
-    //todo check this issue & compleat
+
     public static void main(String[] args) {
         Human child1=new Human("Child_1", true, 5, new ArrayList<Human>());
         Human child2= new Human("Child_2",true, 7, new ArrayList<Human>());
