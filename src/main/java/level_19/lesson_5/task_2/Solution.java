@@ -23,12 +23,12 @@ public class Solution {
         String text = builder.toString();
         System.out.println(text);
         String[] expWord = text.split("\\W");
-        int coutn = 0;
+        int count = 0;
         for(int i = 0; i < expWord.length; i++) {
             if(expWord[i].equalsIgnoreCase("world")){
-                coutn++;
+                count++;
             }
         }
-        System.out.println(coutn);
+        System.out.println(count);
     }
 }
