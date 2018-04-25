@@ -1,0 +1,47 @@
+package java_core.level_17.lesson_10.task_13;
+
+import level_17.lesson_10.task_13.Dishes;
+import level_17.lesson_10.task_13.Order;
+import level_17.lesson_10.task_13.Table;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+/**
+ * @author by Ivan Korol on 11/8/2017.
+ */
+public class Manager {
+    private static level_17.lesson_10.task_13.Manager ourInstance = new level_17.lesson_10.task_13.Manager();
+
+    private final List<Table> restaurantTables = new ArrayList<Table>(10);
+    private int currentIndex = 0;
+
+    private final Queue<Order> orderQueue = new ConcurrentLinkedQueue<Order>();        // очередь с заказами
+    private final Queue<Dishes> dishesQueue = new ConcurrentLinkedQueue<Dishes>();     // очередь с готовыми блюдами
+
+    public synchronized static level_17.lesson_10.task_13.Manager getInstance() {
+        return ourInstance;
+    }
+
+    private Manager() {               // создаем 10 столов
+        for (int i = 0; i < 10; i++) {
+            restaurantTables.add(new Table());
+        }
+    }
+
+    public synchronized Table getNextTable() {           // официант ходит по кругу от 1 стола к 10
+        Table table = restaurantTables.get(currentIndex);
+        currentIndex = (currentIndex + 1) % 10;
+        return table;
+    }
+
+    public Queue<Order> getOrderQueue() {
+        return orderQueue;
+    }
+
+    public Queue<Dishes> getDishesQueue() {
+        return dishesQueue;
+    }
+}
