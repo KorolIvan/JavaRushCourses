@@ -1,1 +1,0 @@
-Коллекции: LinkedList, HashSet, HashMap. Date - дата
