@@ -1,6 +1,5 @@
 package java_core.level_16.lesson_13.task_12;
 
-import level_16.lesson_13.task_12.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;

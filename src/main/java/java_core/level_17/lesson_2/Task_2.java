@@ -11,7 +11,7 @@ public class Task_2 {
     public static int[] testArray = new int[1000];
 
     static {
-        for (int i = 0; i < level_17.lesson_2.Task_2.testArray.length; i++) {
+        for (int i = 0; i < Task_2.testArray.length; i++) {
             testArray[i] = i;
         }
     }

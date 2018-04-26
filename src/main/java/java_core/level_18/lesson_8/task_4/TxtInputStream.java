@@ -1,9 +1,7 @@
 package java_core.level_18.lesson_8.task_4;
 
-import level_18.lesson_8.task_4.UnsupportedFileNameException;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TxtInputStream extends FileInputStream {

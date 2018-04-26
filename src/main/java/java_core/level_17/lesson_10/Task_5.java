@@ -4,7 +4,7 @@ public class Task_5 {
     char[] value;
     int count;
 
-    public level_17.lesson_10.Task_5 append(CharSequence s) {
+    public Task_5 append(CharSequence s) {
             if (s == null) {
                 s = "null";
 
@@ -15,15 +15,15 @@ public class Task_5 {
 
             }
 
-            if (s instanceof level_17.lesson_10.Task_5) {
-                return this.appendThis((level_17.lesson_10.Task_5) s);
+            if (s instanceof Task_5) {
+                return this.appendThis((Task_5) s);
 
             }
 
         return this.append(s);
     }
 
-    public synchronized level_17.lesson_10.Task_5 appendThis(level_17.lesson_10.Task_5 s) {
+    public synchronized Task_5 appendThis(Task_5 s) {
         //do something here....
         return this;
     }

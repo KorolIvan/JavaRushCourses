@@ -13,13 +13,13 @@ public class Task_3 {
     public  String StringVar;
 
     public static void main(String[] args) {
-        System.out.println(new level_15.lesson_9.Task_3().intVar);
-        System.out.println(new level_15.lesson_9.Task_3().doubleVar);
-        System.out.println(new level_15.lesson_9.Task_3().DoubleVar);
-        System.out.println(new level_15.lesson_9.Task_3().booleanVar);
-        System.out.println(new level_15.lesson_9.Task_3().ObjectVar);
-        System.out.println(new level_15.lesson_9.Task_3().ExceptionVar);
-        System.out.println(new level_15.lesson_9.Task_3().StringVar);
+        System.out.println(new Task_3().intVar);
+        System.out.println(new Task_3().doubleVar);
+        System.out.println(new Task_3().DoubleVar);
+        System.out.println(new Task_3().booleanVar);
+        System.out.println(new Task_3().ObjectVar);
+        System.out.println(new Task_3().ExceptionVar);
+        System.out.println(new Task_3().StringVar);
 
     }
 }

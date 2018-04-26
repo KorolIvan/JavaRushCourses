@@ -1,6 +1,6 @@
 package java_core.level_17.lesson_10.task_9;
 
-import level_17.lesson_10.task_9.CorruptedDataException;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class Solution {
         }
 
         try {
-            new level_17.lesson_10.task_9.Solution().joinData();
+            new Solution().joinData();
         }catch (CorruptedDataException ex) {
             ex.printStackTrace();
         }

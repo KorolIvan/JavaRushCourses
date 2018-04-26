@@ -4,10 +4,10 @@ package java_core.level_13.lesson_11.Task_13;
  * @author by Ivan Korol on 11/8/2017.
  */
 public final class BodyPart {
-    final static level_13.lesson_11.Task_13.BodyPart LEG = new level_13.lesson_11.Task_13.BodyPart("нога");
-    final static level_13.lesson_11.Task_13.BodyPart HEAD = new level_13.lesson_11.Task_13.BodyPart("голова");
-    final static level_13.lesson_11.Task_13.BodyPart ARM = new level_13.lesson_11.Task_13.BodyPart("рука");
-    final static level_13.lesson_11.Task_13.BodyPart CHEST = new level_13.lesson_11.Task_13.BodyPart("грудь");
+    final static BodyPart LEG = new BodyPart("нога");
+    final static BodyPart HEAD = new BodyPart("голова");
+    final static BodyPart ARM = new BodyPart("рука");
+    final static BodyPart CHEST = new BodyPart("грудь");
 
     private String bodyPart;
 

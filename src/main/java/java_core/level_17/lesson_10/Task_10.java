@@ -50,7 +50,7 @@ public class Task_10 {
         @Override
         public void run() {
             do {
-                synchronized (level_17.lesson_10.Task_10.class) {
+                synchronized (Task_10.class) {
                     incrementCount();
                     values[getCount()]++;
 

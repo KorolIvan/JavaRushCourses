@@ -12,7 +12,7 @@ public class AmigoOutputStream extends FileOutputStream{
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        new level_18.lesson_8.task_3.AmigoOutputStream(new FileOutputStream(fileName));
+        new AmigoOutputStream(new FileOutputStream(fileName));
     }
 
     @Override

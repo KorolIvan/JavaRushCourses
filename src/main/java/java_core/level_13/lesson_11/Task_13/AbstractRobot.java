@@ -1,8 +1,6 @@
 package java_core.level_13.lesson_11.Task_13;
 
-import level_13.lesson_11.Task_13.Attackable;
-import level_13.lesson_11.Task_13.BodyPart;
-import level_13.lesson_11.Task_13.Defensable;
+
 
 /**
  * @author by Ivan Korol on 11/8/2017.

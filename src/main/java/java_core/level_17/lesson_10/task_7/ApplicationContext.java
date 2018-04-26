@@ -1,6 +1,5 @@
 package java_core.level_17.lesson_10.task_7;
 
-import level_17.lesson_10.task_7.Bean;
 
 import java.util.HashMap;
 import java.util.Map;

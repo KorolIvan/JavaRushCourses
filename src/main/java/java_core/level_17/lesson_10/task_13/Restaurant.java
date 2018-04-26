@@ -1,7 +1,6 @@
 package java_core.level_17.lesson_10.task_13;
 
-import level_17.lesson_10.task_13.Cook;
-import level_17.lesson_10.task_13.Waiter;
+
 
 import java.util.ArrayList;
 import java.util.List;

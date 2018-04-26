@@ -1,6 +1,5 @@
 package java_core.level_19.lesson_3.task_2;
 
-import level_19.lesson_3.task_2.AmigoStringWriter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

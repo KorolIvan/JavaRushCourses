@@ -29,7 +29,7 @@ public class Task_4 {
         public void run() {
             for (int i = 0; i < 10; i++) {
                 System.out.println(message + i);
-                level_16.lesson_13.Task_4.sleep();
+                Task_4.sleep();
             }
         }
     }

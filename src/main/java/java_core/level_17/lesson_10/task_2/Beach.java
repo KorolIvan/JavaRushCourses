@@ -1,6 +1,6 @@
 package java_core.level_17.lesson_10.task_2;
 
-public class Beach implements Comparable<level_17.lesson_10.task_2.Beach>{
+public class Beach implements Comparable<Beach>{
     private String name;      //название
     private float distance;   //расстояние
     private int quality;    //качество
@@ -40,7 +40,7 @@ public class Beach implements Comparable<level_17.lesson_10.task_2.Beach>{
     }
 
     @Override
-    public synchronized int compareTo(level_17.lesson_10.task_2.Beach o) {
+    public synchronized int compareTo(Beach o) {
         //int temp = 0;
         return (int) ((this.quality * this.distance) - (o.getDistance() * o.getQuality()));
 

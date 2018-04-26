@@ -1,6 +1,5 @@
 package java_core.level_17.lesson_10.task_12;
 
-import level_17.lesson_10.task_12.Sex;
 
 import java.util.Date;
 
@@ -18,12 +17,12 @@ public class Person {
         this.birthDay = birthDay;
     }
 
-    public static level_17.lesson_10.task_12.Person createMale(String name, Date birthDay) {
-        return new level_17.lesson_10.task_12.Person(name, Sex.MALE, birthDay);
+    public static Person createMale(String name, Date birthDay) {
+        return new Person(name, Sex.MALE, birthDay);
     }
 
-    public static level_17.lesson_10.task_12.Person createFemale(String name, Date birthDay) {
-        return new level_17.lesson_10.task_12.Person(name, Sex.FEMALE, birthDay);
+    public static Person createFemale(String name, Date birthDay) {
+        return new Person(name, Sex.FEMALE, birthDay);
     }
 
     public String getName() {

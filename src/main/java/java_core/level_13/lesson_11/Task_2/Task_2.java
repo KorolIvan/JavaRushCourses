@@ -1,7 +1,5 @@
 package java_core.level_13.lesson_11.Task_2;
 
-import level_13.lesson_11.Task_2.Weather;
-import level_13.lesson_11.Task_2.WeatherType;
 
 public class Task_2 {
     public static void main(String[] args) {

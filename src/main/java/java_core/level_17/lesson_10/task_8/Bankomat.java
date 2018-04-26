@@ -1,7 +1,6 @@
 package java_core.level_17.lesson_10.task_8;
 
-import level_17.lesson_10.task_8.BankAccount;
-import level_17.lesson_10.task_8.NotEnoughMoneyException;
+
 
 public class Bankomat {
     static BankAccount account = new BankAccount("Amigo");

@@ -33,10 +33,10 @@ public class Task_6 {
 
     public static void main(String[] args) {
         System.out.println("public static void main");
-        level_15.lesson_12.Task_6 s = new level_15.lesson_12.Task_6();
+        Task_6 s = new Task_6();
     }
 
-    public static void printAllFields(level_15.lesson_12.Task_6 obj) {
+    public static void printAllFields(Task_6 obj) {
         System.out.println("static void printAllFields");
         System.out.println(obj.i);
         System.out.println(obj.name);

@@ -1,7 +1,6 @@
 package java_core.level_13.lesson_11.Task_12;
 
-import level_13.lesson_11.Task_12.Person;
-import level_13.lesson_11.Task_12.RepkaStory;
+
 
 import java.util.ArrayList;
 import java.util.List;

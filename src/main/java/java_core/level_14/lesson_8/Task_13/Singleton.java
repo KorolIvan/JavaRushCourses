@@ -4,12 +4,12 @@ package java_core.level_14.lesson_8.Task_13;
  * @author by Ivan Korol on 11/8/2017.
  */
 public  class Singleton {
-    private static level_14.lesson_8.Task_13.Singleton instance = new level_14.lesson_8.Task_13.Singleton();
+    private static Singleton instance = new Singleton();
 
     private Singleton(){
 
     }
-    public static level_14.lesson_8.Task_13.Singleton getInstance(){
+    public static Singleton getInstance(){
         return instance;
     }
 

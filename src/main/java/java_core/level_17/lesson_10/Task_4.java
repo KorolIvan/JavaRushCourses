@@ -9,7 +9,7 @@ public class Task_4 {
     }
 
     protected  void method1(String param1) {
-        level_17.lesson_10.Task_4 solution = new level_17.lesson_10.Task_4();
+        Task_4 solution = new Task_4();
         solution.method0();
     }
 

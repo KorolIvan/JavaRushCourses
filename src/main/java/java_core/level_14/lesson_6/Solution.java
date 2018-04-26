@@ -1,10 +1,6 @@
 package java_core.level_14.lesson_6;
 
-import level_14.lesson_6.*;
-import level_14.lesson_6.Country;
-import level_14.lesson_6.Hen;
-import level_14.lesson_6.MoldovanHen;
-import level_14.lesson_6.UkrainianHen;
+
 
 /**
  * @author by Ivan Korol on 11/8/2017.

@@ -1,7 +1,5 @@
 package java_core.level_15.lesson_12.Task_12;
 
-import level_15.lesson_12.Task_12.LatteMaker;
-import level_15.lesson_12.Task_12.TeaMaker;
 
 public class Solution {
     public static void main(String[] args) {

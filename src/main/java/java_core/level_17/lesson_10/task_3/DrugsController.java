@@ -1,6 +1,6 @@
 package java_core.level_17.lesson_10.task_3;
 
-import level_17.lesson_10.task_3.Drug;
+
 
 import java.util.HashMap;
 import java.util.Map;

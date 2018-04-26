@@ -1,6 +1,5 @@
 package java_core.level_17.lesson_4.task_5;
 
-import level_17.lesson_4.task_5.IMF;
 
 public class Solution {
     public static void main(String[] args) {

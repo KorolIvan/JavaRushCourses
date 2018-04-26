@@ -1,8 +1,6 @@
 package java_core.level_14.lesson_8.Task_5;
 
-import level_14.lesson_8.Task_5.Keyboard;
-import level_14.lesson_8.Task_5.Monitor;
-import level_14.lesson_8.Task_5.Mouse;
+
 
 /**
  * @author by Ivan Korol on 11/8/2017.

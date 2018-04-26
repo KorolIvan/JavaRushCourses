@@ -1,9 +1,6 @@
 package java_core.level_15.lesson_12.Task_4;
 
-import level_15.lesson_12.Task_4.Earth;
-import level_15.lesson_12.Task_4.Moon;
-import level_15.lesson_12.Task_4.Planet;
-import level_15.lesson_12.Task_4.Sun;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

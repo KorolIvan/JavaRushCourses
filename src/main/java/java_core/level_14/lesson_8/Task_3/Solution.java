@@ -1,7 +1,7 @@
 package java_core.level_14.lesson_8.Task_3;
 
 
-import level_14.lesson_8.Task_3.Person;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

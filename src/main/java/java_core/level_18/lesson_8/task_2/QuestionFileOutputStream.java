@@ -1,6 +1,6 @@
 package java_core.level_18.lesson_8.task_2;
 
-import level_18.lesson_8.task_2.AmigoOutputStream;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

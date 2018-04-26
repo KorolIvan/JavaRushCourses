@@ -1,8 +1,6 @@
 package java_core.level_17.lesson_10.task_3;
 
-import level_12.lesson_9.Task_4;
-import level_17.lesson_10.task_3.Drug;
-import level_17.lesson_10.task_3.DrugsController;
+
 
 import java.util.ArrayList;
 import java.util.List;

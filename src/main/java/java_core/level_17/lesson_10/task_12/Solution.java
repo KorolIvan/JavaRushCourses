@@ -1,7 +1,5 @@
 package java_core.level_17.lesson_10.task_12;
 
-import level_17.lesson_10.task_12.Person;
-import level_17.lesson_10.task_12.Sex;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

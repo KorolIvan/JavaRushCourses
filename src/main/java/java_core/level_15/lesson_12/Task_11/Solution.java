@@ -1,8 +1,6 @@
 package java_core.level_15.lesson_12.Task_11;
 
-import level_15.lesson_12.Task_11.Flyable;
-import level_15.lesson_12.Task_11.Helicopter;
-import level_15.lesson_12.Task_11.Plane;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

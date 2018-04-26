@@ -1,6 +1,5 @@
 package java_core.level_17.lesson_10.task_13;
 
-import level_17.lesson_10.task_13.Order;
 
 /**
  * @author by Ivan Korol on 11/8/2017.

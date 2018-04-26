@@ -1,6 +1,5 @@
 package java_core.level_15.lesson_12.Task_7;
 
-import level_15.lesson_12.Task_7.Statics;
 
 import java.io.*;
 

@@ -1,6 +1,5 @@
 package java_core.level_19.lesson_3.task_4;
 
-import level_19.lesson_3.task_4.Person;
 
 import java.io.IOException;
 

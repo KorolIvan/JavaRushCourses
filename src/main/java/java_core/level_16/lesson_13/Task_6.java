@@ -22,7 +22,7 @@ public class Task_6 {
                     ++countIndexUp;
                     System.out.println(toString());
                     Thread.sleep(500);
-                    if(countIndexUp == level_16.lesson_13.Task_6.number) {
+                    if(countIndexUp == Task_6.number) {
                         return;
                     }
 
@@ -42,7 +42,7 @@ public class Task_6 {
 
 
     public static class CountDownRunnable implements Runnable {
-        private int countIndexDown = level_16.lesson_13.Task_6.number;
+        private int countIndexDown = Task_6.number;
 
         public void run() {
             try {

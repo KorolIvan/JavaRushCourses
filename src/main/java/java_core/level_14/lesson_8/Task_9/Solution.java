@@ -1,9 +1,6 @@
 package java_core.level_14.lesson_8.Task_9;
 
-import level_14.lesson_8.Task_9.Hrivna;
-import level_14.lesson_8.Task_9.Money;
-import level_14.lesson_8.Task_9.Ruble;
-import level_14.lesson_8.Task_9.USD;
+
 
 import java.util.ArrayList;
 import java.util.List;
