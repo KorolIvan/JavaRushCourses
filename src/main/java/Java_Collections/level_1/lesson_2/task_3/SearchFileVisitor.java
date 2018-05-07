@@ -9,7 +9,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.FileVisitResult.CONTINUE;
 
 /**
  * @author Ivan Korol on 5/7/2018
