@@ -2,121 +2,23 @@ package Java_Collections.level_1.lesson_15.task_1;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Ivan Korol on 5/10/2018
  */
-public class CustomTree extends AbstractList<String> implements Cloneable, Serializable{
+public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
 
-    Entry<String> root;
-    public Map<String, Entry> entries = new LinkedHashMap<>();
-    int size=0;
+    Entry<String> root = new Entry<>("0");
 
-    public CustomTree() {
-        this.root = new Entry<>("0");
-        this.root.lineNumber = 0;
-    }
-
-    public String getParent(String s) {
-        Entry top = root;
-        String result="null";
-        Queue<Entry> queue = new LinkedList<> ();
-        queue.add(top);
-        do{
-            if (top.elementName !=null)
-            {
-                if (top.elementName.equals(s))
-                {
-                    result = top.parent.elementName;
-                    break;
-                }
-            }
-            if (top.leftChild!=null) queue.add(top.leftChild);
-            if (top.rightChild!=null) queue.add(top.rightChild);
-            if (!queue.isEmpty()) top=queue.poll();
-        }while (!queue.isEmpty());
-        return result;
-    }
-
-    @Override
-    public String get(int index) throws UnsupportedOperationException{
-
-        throw new UnsupportedOperationException();
-        //return null;
-    }
-
-    @Override
-    public String set(int index, String element) {
-        //return super.set(index, element);
-        throw  new UnsupportedOperationException();
-    }
-
-    @Override
-    public void add(int index, String s) {
-        Entry<String> top = root;
-        Entry<String> current = new Entry(s);
-        Queue<Entry>queue=new LinkedList<>();
-        do {
-            if (top.leftChild!=null){//Если в левом поддереве есть нода - добавить её в очередь
-                queue.add(top.leftChild);
-            }else {
-                top.leftChild=current;//Создаем новую ноду в левом поддереве
-                top.leftChild.parent=top;//Указываем родителя
-                size++;
-                return;
-            }
-            if (top.rightChild!=null){//Если в правом поддереве есть нода - добавить её в очередь
-                queue.add(top.rightChild);
-            }else {
-                top.rightChild=current;//Создаем новую ноду в правом поддереве
-                top.rightChild.parent=top;//Указывае родителя
-                size++;
-                return;
-            }
-            if (!queue.isEmpty()){
-                top=queue.poll();//Берём из начала очереди с удалением
-            }
-        }while (!queue.isEmpty());
-        queue.clear();
-    }
-
-    @Override
-    public String remove(int index) {
-        //return super.remove(index);
-        throw  new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<String> subList(int fromIndex, int toIndex) {
-        //return super.subList(fromIndex, toIndex);
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void removeRange(int fromIndex, int toIndex) {
-        //super.removeRange(fromIndex, toIndex);
-        throw  new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends String> c) {
-//        return super.addAll(index, c);
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int size() {
-        if  (root==null){
-            return 0;
-        }
-        return size;
-    }
-
-    static class Entry<T> implements Serializable{
+    static class Entry<T> implements Serializable {
         String elementName;
-        int lineNumber;
-        boolean availableToAddLeftChildren, availableToAddRightChildren;
-        Entry<T> parent, leftChild, rightChild;
+        int lineNumber = 0;
+        boolean availableToAddLeftChildren,
+                availableToAddRightChildren;
+        Entry<T> parent,
+                leftChild,
+                rightChild;
 
         public Entry(String elementName) {
             this.elementName = elementName;
@@ -124,17 +26,166 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
             this.availableToAddRightChildren = true;
         }
 
-        void checkChildren(){
-            if(leftChild != null) {
-                this.availableToAddLeftChildren = false;
-            }else if(rightChild !=null) {
-                this.availableToAddRightChildren = false;
-            }
+        void checkChildren() {
+            if (leftChild != null)
+                availableToAddLeftChildren = false;
+            if (rightChild != null)
+                availableToAddRightChildren = false;
         }
 
         public boolean isAvailableToAddChildren() {
-            return availableToAddLeftChildren || availableToAddRightChildren;
+            return availableToAddRightChildren || availableToAddLeftChildren;
         }
+    }
 
+    public boolean add(String element) {
+        Entry<String> newElement = new Entry<>(element);
+        Queue<Entry<String>> queue = new ConcurrentLinkedQueue<>();
+        queue.add(root);
+        while (true) {
+            Entry<String> currentRoot = queue.remove();
+            // если находим локальный "корень" у которого нет 1 или 2=х "детей", то записываем
+            if (currentRoot.isAvailableToAddChildren()) {
+                elementAdd(currentRoot, newElement);
+                break;
+            } // если дети есть, то ставим их в очередь
+            else {
+                if (currentRoot.leftChild != null)
+                    queue.add(currentRoot.leftChild);
+                if (currentRoot.rightChild != null)
+                    queue.add(currentRoot.rightChild);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String get(int index) {
+       throw new UnsupportedOperationException();
+    }
+
+    //проверяет наличие детей и запихивает туда, где их нет
+    public void elementAdd(Entry<String> currentRoot, Entry<String> currentElement) {
+        if (currentRoot.availableToAddLeftChildren) {
+            currentElement.parent = currentRoot;
+            currentElement.lineNumber = currentRoot.lineNumber + 1;
+            currentRoot.leftChild = currentElement;
+        } else if (currentRoot.availableToAddRightChildren) {
+            currentElement.parent = currentRoot;
+            currentElement.lineNumber = currentRoot.lineNumber + 1;
+            currentRoot.rightChild = currentElement;
+        }
+        currentRoot.checkChildren();
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if(o instanceof String){
+            boolean deleteElement = false;
+            ArrayList<Entry<String>> intQueue = new ArrayList<Entry<String>>();
+            intQueue.add(root);
+
+            while (! intQueue.isEmpty()){
+                Entry<String> current = intQueue.remove(0);
+                if (current.leftChild != null){
+                    if(o.equals(current.leftChild.elementName)) {
+                        current.leftChild = null;
+                        current.availableToAddLeftChildren = true;
+                        deleteElement = true;
+                        break;
+                    }
+                    intQueue.add(current.leftChild);
+                }
+
+                if (current.rightChild != null){
+                    if(o.equals(current.rightChild.elementName)) {
+                        current.rightChild = null;
+                        current.availableToAddRightChildren = true;
+                        deleteElement = true;
+                        break;
+                    }
+                    intQueue.add(current.rightChild);
+                }
+
+            }
+
+
+            boolean addElement = false;
+            intQueue = new ArrayList<Entry<String>>();
+            intQueue.add(root);
+
+            while (! intQueue.isEmpty()){
+                Entry<String> current = intQueue.remove(0);
+
+                if (current.availableToAddLeftChildren){
+                    addElement =  true;
+                    break;
+                }
+                else if(current.leftChild !=null){
+                    intQueue.add(current.leftChild);
+                }
+
+                if (current.availableToAddRightChildren){
+                    addElement = true;
+                    break;
+                }
+                else if(current.rightChild !=null) {
+                    intQueue.add(current.rightChild);
+                }
+            }
+
+
+            return deleteElement;
+        }
+        else{
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    //метод ищет указанный элемент в графе и взвращает его или null, если его нет
+    public Entry<String> findElement(Entry<String> root, String findElement) {
+        Entry<String> elementOut = null;
+        Queue<Entry<String>> queue = new ConcurrentLinkedQueue<>();
+        queue.add(root);
+        while (queue.size() != 0) {
+            Entry<String> currentElement = queue.remove();
+            if (currentElement.elementName.equals(findElement)) {
+                elementOut = currentElement;
+                break;
+            } else {
+                if (currentElement.leftChild != null)
+                    queue.add(currentElement.leftChild);
+                if (currentElement.rightChild != null)
+                    queue.add(currentElement.rightChild);
+            }
+        }
+        return elementOut;
+    }
+
+    @Override
+    public int size() {
+        int size = 0;
+        Queue<Entry<String>> queue = new ConcurrentLinkedQueue<>();
+        queue.add(root);
+        // пробегаемся по элементам
+        while (queue.size() != 0) {
+            Entry<String> currentElement = queue.remove();
+            if (currentElement.leftChild != null) {
+                queue.add(currentElement.leftChild);
+                size++;
+            }
+            if (currentElement.rightChild != null) {
+                queue.add(currentElement.rightChild);
+                size++;
+            }
+        }
+        return size;
+    }
+
+    public String getParent(String element) {
+        Entry<String> findElement = findElement(root, element);
+        if (findElement != null)
+            return findElement.parent.elementName;
+        else return null;
     }
 }
