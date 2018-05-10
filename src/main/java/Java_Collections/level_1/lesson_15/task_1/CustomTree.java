@@ -1,10 +1,7 @@
 package Java_Collections.level_1.lesson_15.task_1;
 
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ivan Korol on 5/10/2018
@@ -12,31 +9,33 @@ import java.util.List;
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable{
 
     Entry<String> root;
+    public Map<String, Entry> entries = new LinkedHashMap<>();
+    int size=0;
 
-    static class Entry<T> implements Serializable{
-        String elementName;
-        int lineNumber;
-        boolean availableToAddLeftChildren, availableToAddRightChildren;
-        Entry<T> parent, leftChild, rightChild;
+    public CustomTree() {
+        this.root = new Entry<>("0");
+        this.root.lineNumber = 0;
+    }
 
-        public Entry(String elementName) {
-            this.elementName = elementName;
-            this.availableToAddLeftChildren = true;
-            this.availableToAddRightChildren = true;
-        }
-
-        void checkChildren(){
-            if(leftChild != null) {
-                this.availableToAddLeftChildren = false;
-            }else if(rightChild !=null) {
-                this.availableToAddRightChildren = false;
+    public String getParent(String s) {
+        Entry top = root;
+        String result="null";
+        Queue<Entry> queue = new LinkedList<> ();
+        queue.add(top);
+        do{
+            if (top.elementName !=null)
+            {
+                if (top.elementName.equals(s))
+                {
+                    result = top.parent.elementName;
+                    break;
+                }
             }
-        }
-
-        public boolean isAvailableToAddChildren() {
-            return availableToAddLeftChildren || availableToAddRightChildren;
-        }
-
+            if (top.leftChild!=null) queue.add(top.leftChild);
+            if (top.rightChild!=null) queue.add(top.rightChild);
+            if (!queue.isEmpty()) top=queue.poll();
+        }while (!queue.isEmpty());
+        return result;
     }
 
     @Override
@@ -53,9 +52,32 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     }
 
     @Override
-    public void add(int index, String element) {
-        //super.add(index, element);
-         throw new UnsupportedOperationException();
+    public void add(int index, String s) {
+        Entry<String> top = root;
+        Entry<String> current = new Entry(s);
+        Queue<Entry>queue=new LinkedList<>();
+        do {
+            if (top.leftChild!=null){//Если в левом поддереве есть нода - добавить её в очередь
+                queue.add(top.leftChild);
+            }else {
+                top.leftChild=current;//Создаем новую ноду в левом поддереве
+                top.leftChild.parent=top;//Указываем родителя
+                size++;
+                return;
+            }
+            if (top.rightChild!=null){//Если в правом поддереве есть нода - добавить её в очередь
+                queue.add(top.rightChild);
+            }else {
+                top.rightChild=current;//Создаем новую ноду в правом поддереве
+                top.rightChild.parent=top;//Указывае родителя
+                size++;
+                return;
+            }
+            if (!queue.isEmpty()){
+                top=queue.poll();//Берём из начала очереди с удалением
+            }
+        }while (!queue.isEmpty());
+        queue.clear();
     }
 
     @Override
@@ -84,6 +106,35 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
-        return 0;
+        if  (root==null){
+            return 0;
+        }
+        return size;
+    }
+
+    static class Entry<T> implements Serializable{
+        String elementName;
+        int lineNumber;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+            this.availableToAddLeftChildren = true;
+            this.availableToAddRightChildren = true;
+        }
+
+        void checkChildren(){
+            if(leftChild != null) {
+                this.availableToAddLeftChildren = false;
+            }else if(rightChild !=null) {
+                this.availableToAddRightChildren = false;
+            }
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return availableToAddLeftChildren || availableToAddRightChildren;
+        }
+
     }
 }
