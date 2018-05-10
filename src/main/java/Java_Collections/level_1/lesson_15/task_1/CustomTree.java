@@ -11,6 +11,33 @@ import java.util.List;
  */
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable{
 
+    Entry<String> root;
+
+    static class Entry<T> implements Serializable{
+        String elementName;
+        int lineNumber;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+            this.availableToAddLeftChildren = true;
+            this.availableToAddRightChildren = true;
+        }
+
+        void checkChildren(){
+            if(leftChild != null) {
+                this.availableToAddLeftChildren = false;
+            }else if(rightChild !=null) {
+                this.availableToAddRightChildren = false;
+            }
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return availableToAddLeftChildren || availableToAddRightChildren;
+        }
+
+    }
 
     @Override
     public String get(int index) throws UnsupportedOperationException{
