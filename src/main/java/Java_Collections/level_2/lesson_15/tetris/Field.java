@@ -80,24 +80,29 @@ public class Field {
     }
 
     public void removeFullLines(){
-        int[] fullOfOne = new int[width];
-        Arrays.fill(fullOfOne, 1);
+        //Создаем список для хранения линий
+        ArrayList<int[]> lines = new ArrayList<int[]>();
 
-        List<int[]> result = new ArrayList();
+        //Копируем все непустые линии в список.
+        for (int i = 0; i < height; i++) {
+            //подсчитываем количество единиц в строке - просто суммируем все ее значения
+            int count = 0;
+            for (int j = 0; j < width; j++) {
+                count += matrix[i][j];
+            }
 
-        Arrays.asList(matrix).stream()
-                .filter((x) -> !Arrays.equals(x, fullOfOne))
-                .forEach(result::add);
-
-        int diference = matrix.length - result.size();
-
-        for (int i = 0; i < diference; i++) {
-            result.add(0, new int[width]);
+            //Если сумма строки не равна ее ширине - добавляем в список
+            if (count != width)
+                lines.add(matrix[i]);
         }
 
-        for (int i = 0; i < matrix.length; i++) {
-            matrix[i] = result.get(i);
+        //Добавляем недостающие строки в начало списка.
+        while (lines.size() < height) {
+            lines.add(0, new int[width]);
         }
+
+        //Преобразуем список обратно в матрицу
+        matrix = lines.toArray(new int[height][width]);
     }
 
     public Integer getValue(int x, int y) {
