@@ -4,9 +4,9 @@ package Java_Collections.level_3.lesson_15.space;
  * @author Ivan Korol on 5/31/2018
  */
 public abstract class BaseObject {
-    private double x;
-    private double y;
-    private double radius;
+    protected double x;
+    protected double y;
+    protected double radius;
     private boolean isAlive;
 
     public BaseObject(double x, double y, double radius) {
