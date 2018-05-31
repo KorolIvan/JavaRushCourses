@@ -44,7 +44,7 @@ public abstract class BaseObject {
         this.radius = radius;
     }
 
-    public void draw() {
+    public void draw(Canvas canvas) {
 
     }
 
