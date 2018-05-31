@@ -3,5 +3,8 @@ package Java_Collections.level_3.lesson_15.space;
 /**
  * @author Ivan Korol on 5/31/2018
  */
-public class SpaceShip {
+public class SpaceShip extends BaseObject {
+    public SpaceShip(double x, double y, double radius) {
+        super(x, y, radius);
+    }
 }
