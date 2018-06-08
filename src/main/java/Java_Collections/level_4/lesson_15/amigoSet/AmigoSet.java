@@ -1,5 +1,8 @@
 package Java_Collections.level_4.lesson_15.amigoSet;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -71,5 +74,52 @@ public class AmigoSet<E> extends AbstractSet<E> implements Serializable, Cloneab
            throw new InternalError();
        }
         return copy;
+    }
+
+    private void writeObject(ObjectOutputStream oos) {
+
+        try
+        {
+            oos.defaultWriteObject();
+
+            oos.writeObject(map.keySet().size());
+            for (E elem : map.keySet())
+            {
+                oos.writeObject(elem);
+            }
+
+            oos.writeObject(HashMapReflectionHelper.callHiddenMethod(map, "capacity"));
+            oos.writeObject(HashMapReflectionHelper.callHiddenMethod(map, "loadFactor"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream s) {
+        try
+        {
+            s.defaultReadObject();
+
+            Set<E> set = new HashSet<>();
+            int size = (int) s.readObject();
+            for (int i = 0; i < size; i++)
+            {
+                set.add((E) s.readObject());
+            }
+
+            int capacity = (int) s.readObject();
+            float loadFactor = (float) s.readObject();
+            map = new HashMap<>(capacity, loadFactor);
+            for (E elem : set)
+            {
+                map.put(elem, PRESENT);
+            }
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
