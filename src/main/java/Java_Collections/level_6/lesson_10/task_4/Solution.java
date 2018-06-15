@@ -1,76 +1,32 @@
 package Java_Collections.level_6.lesson_10.task_4;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ivan Korol on 6/15/2018
  */
 public class Solution {
-    private List<Class> hiddenClasses = new ArrayList<>();
-    private String packageName;
-
-    public Solution(String packageName) {
-        this.packageName = packageName;
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException {
-        Solution solution = new Solution(Solution.class.getProtectionDomain().getCodeSource().getLocation().getPath() + "com/javarush/task/task36/task3606/data/second");
-        solution.scanFileSystem();
-        System.out.println(solution.getHiddenClassObjectByKey("hiddenclassimplse"));
-        System.out.println(solution.getHiddenClassObjectByKey("hiddenclassimplf"));
-        System.out.println(solution.getHiddenClassObjectByKey("packa"));
-    }
-
-    public void scanFileSystem() throws ClassNotFoundException {
-        File[] files = new File(packageName).listFiles();
-        ClassLoaderFromPath classLoaderFromPath = new ClassLoaderFromPath();
-        for (File f: files) {
-            Class<?> clazz = classLoaderFromPath.loadClass(f.toPath());
-            if(clazz != null) {
-                hiddenClasses.add(clazz);
-            }
+    public static void main(String[] args) {
+        Map<Integer, Integer> map = new MyMultiMap<>(3);
+        for (int i = 0; i < 7; i++) {
+            map.put(i, i);
         }
-    }
+        map.put(5, 56);
+        map.put(5, 57);
+        System.out.println(map.put(5, 58));             //expected: 57
 
-    public HiddenClass getHiddenClassObjectByKey(String key) {
-        for (Class<?> clazz: hiddenClasses) {
-            if(clazz.getSimpleName().toLowerCase().startsWith(key.toLowerCase())){
-                try{
-                    Constructor[] constructors = clazz.getDeclaredConstructors();
-                    for(Constructor constructor: constructors) {
-                        if(constructor.getGenericParameterTypes().length == 0) {
-                            constructor.setAccessible(true);
-                            return (HiddenClass) constructor.newInstance(null);
-                        }
-                    }
-                } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-                    return null;
-                }
-            }
-        }
-        return null;
-    }
+        System.out.println(map);                        //expected: {0=0, 1=1, 2=2, 3=3, 4=4, 5=56, 57, 58, 6=6}
+        System.out.println(map.size());                 //expected: size = 9
 
-    public static class ClassLoaderFromPath extends ClassLoader {
+        System.out.println(map.remove(5));              //expected: 56
+        System.out.println(map);                        //expected: {0=0, 1=1, 2=2, 3=3, 4=4, 5=57, 58, 6=6}
+        System.out.println(map.size());                 //expected: size = 8
 
-        public Class<?> loadClass(Path path) throws ClassNotFoundException {
-            try {
-                if(path.getFileName().toString().lastIndexOf(".class") == -1) {
-                    return null;
-                }
-                byte[] b = Files.readAllBytes(path);
-                return defineClass(null, b, 0, b.length);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+        System.out.println(map.keySet());               //expected: [0, 1, 2, 3, 4, 5, 6]
+        System.out.println(map.values());               //expected: [0, 1, 2, 3, 4, 57, 58, 6]
+
+        System.out.println(map.containsKey(5));         //expected: true
+        System.out.println(map.containsValue(57));      //expected: true
+        System.out.println(map.containsValue(7));       //expected: false
     }
 }
