@@ -1,4 +1,4 @@
-package Java_Collections.level_6.lesson_10;
+package Java_Collections.level_6.lesson_10.task_1;
 
 import java.util.concurrent.DelayQueue;
 
