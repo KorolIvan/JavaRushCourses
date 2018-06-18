@@ -1,5 +1,6 @@
 package Java_Collections.level_6.lesson_15.shortener;
 
+import Java_Collections.level_6.lesson_15.shortener.strategy.FileStorageStrategy;
 import Java_Collections.level_6.lesson_15.shortener.strategy.HashMapStorageStrategy;
 import Java_Collections.level_6.lesson_15.shortener.strategy.OurHashMapStorageStrategy;
 import Java_Collections.level_6.lesson_15.shortener.strategy.StorageStrategy;
@@ -16,6 +17,8 @@ public class Solution {
         testStrategy(strategy1, 10000);
         StorageStrategy strategy2 = new OurHashMapStorageStrategy();
         testStrategy(strategy2, 10000);
+        StorageStrategy strategy3 = new FileStorageStrategy();
+        testStrategy(strategy3, 100);
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings) {
