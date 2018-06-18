@@ -1,0 +1,53 @@
+package Java_Collections.level_7.lesson_6.task_2;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Ivan Korol on 6/18/2018
+ */
+public class Solution {
+    public static void main(String[] args) {
+        Map expectedMap = getExpectedMap();
+
+        System.out.println("********* Add obj with NULL key *********");
+        expectedMap.put(null, "text 1");
+        System.out.println(expectedMap.size());
+        System.out.println(expectedMap.get(null));
+
+        System.out.println("*********  Add obj with 0 key *********");
+        expectedMap.put(0, "text 2");
+        System.out.println(expectedMap.size());
+        System.out.println(expectedMap.get(null));
+        System.out.println(expectedMap.get(0));
+
+        System.out.println("********* Keys *********");
+        for (Object o : expectedMap.keySet()) {
+            System.out.println(o);
+        }
+        System.out.println("********* Values *********");
+        for (Object o : expectedMap.values()) {
+            System.out.println(o);
+        }
+
+        /* Expected output
+********* Add obj with NULL key *********
+1
+text 1
+*********  Add obj with 0 key *********
+2
+text 1
+text 2
+********* Keys *********
+0
+null
+********* Values *********
+text 2
+text 1
+         */
+    }
+
+    public static Map getExpectedMap() {
+        return new HashMap();
+    }
+}
