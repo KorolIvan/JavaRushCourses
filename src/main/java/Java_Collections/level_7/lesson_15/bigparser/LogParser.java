@@ -1,9 +1,6 @@
 package Java_Collections.level_7.lesson_15.bigparser;
 
-import Java_Collections.level_7.lesson_15.bigparser.query.DateQuery;
-import Java_Collections.level_7.lesson_15.bigparser.query.EventQuery;
-import Java_Collections.level_7.lesson_15.bigparser.query.IPQuery;
-import Java_Collections.level_7.lesson_15.bigparser.query.UserQuery;
+import Java_Collections.level_7.lesson_15.bigparser.query.*;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,10 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
 import java.text.DateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Ivan Korol on 6/18/2018
  */
-public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     private Path logDir;
     List<String> logs = new ArrayList<>();
     ArrayList<PartOfLog> partsOfLogs = new ArrayList<>();
@@ -595,6 +595,182 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
             }
         }
         return result;
+    }
+
+    @Override
+    public Set<Object> execute(String query) {
+        Set<Object> result = new HashSet<>();
+        StringQuery parseQuery = parseQuery(query);
+
+        if (parseQuery.after != null && parseQuery.before != null && parseQuery.field1.equals("ip") && (parseQuery.field2.equals("event") || parseQuery.field2.equals("status"))) {
+            result = getIpsParticularCase(parseQuery.after, parseQuery.before, getFilteredPartsOfLogs(query, parseQuery));
+        } else if (parseQuery.after != null && parseQuery.before != null && parseQuery.field1.equals("date") && parseQuery.field2.equals("event")) {
+            result = getDatesParticularCase(parseQuery.after, parseQuery.before, getFilteredPartsOfLogs(query, parseQuery));
+        } else if (parseQuery.after == null && parseQuery.before == null) {
+            result = executeQueryNoLimitsByDate(parseQuery.field1, getFilteredPartsOfLogs(query, parseQuery));
+        } else {
+            result = executeQuery(parseQuery.field1, parseQuery.after, parseQuery.before, getFilteredPartsOfLogs(query, parseQuery));
+        }
+        return result;
+    }
+
+    private StringQuery parseQuery(String query) {
+        String field1, field2, value1, after, before;
+
+        if (query.contains("\" and date between \"")) {
+            Pattern p = Pattern.compile("^get\\s(.*?)\\sfor\\s(.*?)\\s=\\s\"(.*)\"\\sand date between\\s\"(.*?)\"\\sand\\s\"(.*?)\"");
+            Matcher m = p.matcher(query);
+            m.find();
+            field1 = m.group(1);
+            field2 = m.group(2);
+            value1 = m.group(3);
+            after = m.group(4);
+            before = m.group(5);
+            return new StringQuery(field1, field2, value1, after, before);
+        } else if (query.contains(" = \"")) {
+            Pattern p = Pattern.compile("get\\s(.*?)\\sfor\\s(.*?)\\s=\\s\"(.*)\"");
+            Matcher m = p.matcher(query);
+            m.find();
+            field1 = m.group(1);
+            field2 = m.group(2);
+            value1 = m.group(3);
+            return new StringQuery(field1, field2, value1, null, null);
+        } else {
+            Pattern p = Pattern.compile("^get\\s(.*?)$");
+            Matcher m = p.matcher(query);
+            m.find();
+            field1 = m.group(1);
+            return new StringQuery(field1, null, null, null, null);
+        }
+    }
+
+    private class StringQuery {
+        public StringQuery(String field1, String field2, String value1, String after, String before) {
+            this.field1 = field1;
+            this.field2 = field2;
+            this.value1 = value1;
+            this.after = after;
+            this.before = before;
+        }
+
+        String field1 = "";
+        String field2 = "";
+        String value1 = "";
+        String after = "";
+        String before = "";
+    }
+
+    private Set<Object> executeQueryNoLimitsByDate(String field1, ArrayList<PartOfLog> partFiltered) {
+        Set<Object> result = new HashSet<>();
+        switch ("get " + field1.toLowerCase()) {
+            case "get ip":
+                result.addAll(getIPs(partFiltered, null, null));
+                break;
+            case "get user":
+                result.addAll(getUsers(partFiltered, null, null));
+                break;
+            case "get date":
+                result.addAll(getDates(partFiltered, null, null));
+                break;
+            case "get event":
+                result.addAll(getEvents(partFiltered, null, null));
+                break;
+            case "get status":
+                result.addAll(getStatuses(partFiltered, null, null));
+                break;
+        }
+        return result;
+    }
+
+    private Set<Object> executeQuery(String field1, String dateAfter, String dateBefore, ArrayList<PartOfLog> partFiltered) {
+        Set<Object> result = new HashSet<>();
+        Date after = parseDate(dateAfter, "dd.MM.yyyy HH:mm:ss");
+        Date before = parseDate(dateBefore, "dd.MM.yyyy HH:mm:ss");
+        switch ("get " + field1.toLowerCase()) {
+            case "get ip":
+                result.addAll(getIPs(partFiltered, after, before));
+                break;
+            case "get user":
+                result.addAll(getUsers(partFiltered, after, before));
+                break;
+            case "get date":
+                result.addAll(getDates(partFiltered, after, before));
+                break;
+            case "get event":
+                result.addAll(getEvents(partFiltered, after, before));
+                break;
+            case "get status":
+                result.addAll(getStatuses(partFiltered, after, before));
+                break;
+        }
+        return result;
+    }
+
+    private ArrayList<PartOfLog> getFilteredPartsOfLogs(String query, StringQuery parseQuery) {
+        ArrayList<PartOfLog> partFiltered = new ArrayList<>();
+        if (parseQuery.field2 != null && parseQuery.value1 != null) {
+            for (PartOfLog p : partsOfLogs) {
+                try {
+                    if (parseQuery.field2.equals("date")) {
+                        if (p.date.equals(parseDate(parseQuery.value1, "d.M.y H:m:s"))) {
+                            partFiltered.add(p);
+                        } else if (p.date.equals(parseDate(parseQuery.value1, "d.M.y H.m.s"))) {
+                            partFiltered.add(p);
+                        }
+                    } else if ((p.getClass().getField(parseQuery.field2).get(p)).toString().equals(parseQuery.value1)) {
+                        partFiltered.add(p);
+                    }
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                }
+            }
+        } else {
+            partFiltered.addAll(partsOfLogs);
+        }
+        return partFiltered;
+    }
+
+    private Set<Object> getIpsParticularCase(String dateAfter, String dateBefore, ArrayList<PartOfLog> partFiltered) {
+        Set<Object> uniqueIPs = new HashSet<>();
+        Date after = parseDate(dateAfter, "d.M.y H:m:s");
+        Date before = parseDate(dateBefore, "d.M.y H:m:s");
+        for (PartOfLog part : partFiltered) {
+            if (isDateInRangeParticularCase(part.date, after, before)) {
+                uniqueIPs.add(part.ip);
+            }
+        }
+        return uniqueIPs;
+    }
+
+    private Set<Object> getDatesParticularCase(String dateAfter, String dateBefore, ArrayList<PartOfLog> partFiltered) {
+        Set<Object> uniqueDates = new HashSet<>();
+        Date after = parseDate(dateAfter, "d.M.y H:m:s");
+        Date before = parseDate(dateBefore, "d.M.y H:m:s");
+        for (PartOfLog part : partFiltered) {
+            if (isDateInRangeParticularCase(part.date, after, before)) {
+                uniqueDates.add(part.date);
+            }
+        }
+        return uniqueDates;
+    }
+
+    private boolean isDateInRangeParticularCase(Date check, Date after, Date before) {
+        boolean fits = before == null || check.before(before);
+        return fits && (after == null || check.after(after));
+    }
+
+    private Set<Status> getStatuses(ArrayList<PartOfLog> parts, Date after, Date before) {
+        Set<Status> uniqueStatuses = new HashSet<>();
+        if (after == null && before == null) {
+            for (PartOfLog part : parts) {
+                uniqueStatuses.add(part.status);
+            }
+        }
+        for (PartOfLog part : parts) {
+            if (isDateInRange(part.date, after, before)) {
+                uniqueStatuses.add(part.status);
+            }
+        }
+        return uniqueStatuses;
     }
 }
 
