@@ -1,5 +1,6 @@
 package Java_Collections.level_7.lesson_15.bigparser;
 
+import Java_Collections.level_7.lesson_15.bigparser.query.DateQuery;
 import Java_Collections.level_7.lesson_15.bigparser.query.IPQuery;
 import Java_Collections.level_7.lesson_15.bigparser.query.UserQuery;
 
@@ -13,7 +14,7 @@ import java.text.DateFormat;
 /**
  * @author Ivan Korol on 6/18/2018
  */
-public class LogParser implements IPQuery, UserQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery {
     private Path logDir;
     List<String> logs = new ArrayList<>();
     ArrayList<PartOfLog> partsOfLogs = new ArrayList<>();
@@ -320,6 +321,130 @@ public class LogParser implements IPQuery, UserQuery {
             }
         }
         return getUsers(partsFilterDoneTask, after, before);
+    }
+
+    private Set<Date> getDates(ArrayList<PartOfLog> parts, Date after, Date before) {
+        Set<Date> uniqueDates = new HashSet<>();
+        if (after == null && before == null) {
+            for (PartOfLog part : parts) {
+                uniqueDates.add(part.date);
+            }
+        }
+        for (PartOfLog part : parts) {
+            if (isDateInRange(part.date, after, before)) {
+                uniqueDates.add(part.date);
+            }
+        }
+        return uniqueDates;
+    }
+
+    @Override
+    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserAndEvent = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(event)) {
+                partsFilterUserAndEvent.add(p);
+            }
+        }
+        return getDates(partsFilterUserAndEvent, after, before);
+    }
+
+    @Override
+    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterEventFailed = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.status.equals(Status.FAILED)) {
+                partsFilterEventFailed.add(p);
+            }
+        }
+        return getDates(partsFilterEventFailed, after, before);
+    }
+
+    @Override
+    public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterEventError = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.status.equals(Status.ERROR)) {
+                partsFilterEventError.add(p);
+            }
+        }
+        return getDates(partsFilterEventError, after, before);
+    }
+
+    @Override
+    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserLogged = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(Event.LOGIN)) {
+                partsFilterUserLogged.add(p);
+            }
+        }
+        ArrayList<Date> result = new ArrayList<>();
+        result.addAll(getDates(partsFilterUserLogged, after, before));
+        Collections.sort(result);
+        try {
+            return result.get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserSolvedTask = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(Event.SOLVE_TASK) && Integer.parseInt(p.numberOfTask) == task) {
+                partsFilterUserSolvedTask.add(p);
+            }
+        }
+        ArrayList<Date> result = new ArrayList<>();
+        result.addAll(getDates(partsFilterUserSolvedTask, after, before));
+        Collections.sort(result);
+        try {
+            return result.get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserDoneTask = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(Event.DONE_TASK) && Integer.parseInt(p.numberOfTask) == task) {
+                partsFilterUserDoneTask.add(p);
+            }
+        }
+        ArrayList<Date> result = new ArrayList<>();
+        result.addAll(getDates(partsFilterUserDoneTask, after, before));
+        Collections.sort(result);
+        try {
+            return result.get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserSendMessage = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(Event.WRITE_MESSAGE)) {
+                partsFilterUserSendMessage.add(p);
+            }
+        }
+        return getDates(partsFilterUserSendMessage, after, before);
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUserDownloadedPlugin = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user) && p.event.equals(Event.DOWNLOAD_PLUGIN)) {
+                partsFilterUserDownloadedPlugin.add(p);
+            }
+        }
+        return getDates(partsFilterUserDownloadedPlugin, after, before);
     }
 }
 
