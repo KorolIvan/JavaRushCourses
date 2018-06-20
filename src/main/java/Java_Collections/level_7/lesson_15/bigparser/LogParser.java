@@ -1,6 +1,7 @@
 package Java_Collections.level_7.lesson_15.bigparser;
 
 import Java_Collections.level_7.lesson_15.bigparser.query.DateQuery;
+import Java_Collections.level_7.lesson_15.bigparser.query.EventQuery;
 import Java_Collections.level_7.lesson_15.bigparser.query.IPQuery;
 import Java_Collections.level_7.lesson_15.bigparser.query.UserQuery;
 
@@ -14,7 +15,7 @@ import java.text.DateFormat;
 /**
  * @author Ivan Korol on 6/18/2018
  */
-public class LogParser implements IPQuery, UserQuery, DateQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
     private Path logDir;
     List<String> logs = new ArrayList<>();
     ArrayList<PartOfLog> partsOfLogs = new ArrayList<>();
@@ -445,6 +446,155 @@ public class LogParser implements IPQuery, UserQuery, DateQuery {
             }
         }
         return getDates(partsFilterUserDownloadedPlugin, after, before);
+    }
+
+    private Set<Event> getEvents(ArrayList<PartOfLog> parts, Date after, Date before) {
+        Set<Event> uniqueEvents = new HashSet<>();
+        if (after == null && before == null) {
+            for (PartOfLog part : parts) {
+                uniqueEvents.add(part.event);
+            }
+        }
+        for (PartOfLog part : parts) {
+            if (isDateInRange(part.date, after, before)) {
+                uniqueEvents.add(part.event);
+            }
+        }
+        return uniqueEvents;
+    }
+
+    @Override
+    public int getNumberOfAllEvents(Date after, Date before) {
+        return getEvents(partsOfLogs, after, before).size();
+    }
+
+    @Override
+    public Set<Event> getAllEvents(Date after, Date before) {
+        return getEvents(partsOfLogs, after, before);
+    }
+
+    @Override
+    public Set<Event> getEventsForIP(String ip, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterIP = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.ip.equals(ip)) {
+                partsFilterIP.add(p);
+            }
+        }
+        return getEvents(partsFilterIP, after, before);
+    }
+
+    @Override
+    public Set<Event> getEventsForUser(String user, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterUser = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.user.equals(user)) {
+                partsFilterUser.add(p);
+            }
+        }
+        return getEvents(partsFilterUser, after, before);
+    }
+
+    @Override
+    public Set<Event> getFailedEvents(Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterStatusFailed = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.status.equals(Status.FAILED)) {
+                partsFilterStatusFailed.add(p);
+            }
+        }
+        return getEvents(partsFilterStatusFailed, after, before);
+    }
+
+    @Override
+    public Set<Event> getErrorEvents(Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterStatusError = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.status.equals(Status.ERROR)) {
+                partsFilterStatusError.add(p);
+            }
+        }
+        return getEvents(partsFilterStatusError, after, before);
+    }
+
+    @Override
+    public int getNumberOfAttemptToSolveTask(int task, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterTask = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.event.equals(Event.SOLVE_TASK) && Integer.parseInt(p.numberOfTask) == task) {
+                partsFilterTask.add(p);
+            }
+        }
+        HashSet<PartOfLog> result = new HashSet<>();
+        if (after == null && before == null) {
+            for (PartOfLog part : partsFilterTask) {
+                result.add(part);
+            }
+        }
+        for (PartOfLog part : partsFilterTask) {
+            if (isDateInRange(part.date, after, before)) {
+                result.add(part);
+            }
+        }
+        return result.size();
+    }
+
+    @Override
+    public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
+        ArrayList<PartOfLog> partsFilterSuccessfulAttemptToSolveTask = new ArrayList<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.event.equals(Event.DONE_TASK) && Integer.parseInt(p.numberOfTask) == task) {
+                partsFilterSuccessfulAttemptToSolveTask.add(p);
+            }
+        }
+        HashSet<PartOfLog> result = new HashSet<>();
+        if (after == null && before == null) {
+            for (PartOfLog part : partsFilterSuccessfulAttemptToSolveTask) {
+                result.add(part);
+            }
+        }
+        for (PartOfLog part : partsFilterSuccessfulAttemptToSolveTask) {
+            if (isDateInRange(part.date, after, before)) {
+                result.add(part);
+            }
+        }
+        return result.size();
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before) {
+        HashSet<Integer> numbersOfTask = new HashSet<>();
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.numberOfTask != null) {
+                numbersOfTask.add(Integer.parseInt(p.numberOfTask));
+            }
+        }
+        for (int i : numbersOfTask) {
+            int value = getNumberOfAttemptToSolveTask(i, after, before);
+            if (value > 0) {
+                result.put(i, value);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before) {
+        HashSet<Integer> numbersOfTask = new HashSet<>();
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (PartOfLog p : partsOfLogs) {
+            if (p.numberOfTask != null) {
+                numbersOfTask.add(Integer.parseInt(p.numberOfTask));
+            }
+        }
+        for (int i : numbersOfTask) {
+            int value = getNumberOfSuccessfulAttemptToSolveTask(i, after, before);
+            if (value > 0) {
+                result.put(i, value);
+            }
+        }
+        return result;
     }
 }
 
