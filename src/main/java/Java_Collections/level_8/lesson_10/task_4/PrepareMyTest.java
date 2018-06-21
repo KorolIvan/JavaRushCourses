@@ -1,0 +1,18 @@
+package Java_Collections.level_8.lesson_10.task_4;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * @author Ivan Korol on 6/21/2018
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+//@PrepareForTest
+public @interface PrepareMyTest {
+    Class<?>[] value() default Solution.class;
+
+    String[] fullyQualifiedNames() default "";
+}
