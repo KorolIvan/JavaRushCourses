@@ -1,6 +1,7 @@
 package Java_Collections.level_8.lesson_15.aggtrgator.vo;
 
-import java.net.URL;
+
+import java.util.Objects;
 
 /**
  * @author Ivan Korol on 6/22/2018
@@ -61,5 +62,22 @@ public class Vacancy {
         this.url = url;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(title, vacancy.title) &&
+                Objects.equals(salary, vacancy.salary) &&
+                Objects.equals(city, vacancy.city) &&
+                Objects.equals(companyName, vacancy.companyName) &&
+                Objects.equals(siteName, vacancy.siteName) &&
+                Objects.equals(url, vacancy.url);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(title, salary, city, companyName, siteName, url);
+    }
 }

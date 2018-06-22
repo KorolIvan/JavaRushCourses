@@ -1,7 +1,11 @@
 package Java_Collections.level_8.lesson_15.aggtrgator.model;
 
 import Java_Collections.level_8.lesson_15.aggtrgator.vo.Vacancy;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +29,16 @@ public class HHStrategy implements Strategy {
 
     @Override
     public List<Vacancy> getVacancies(String searchString) {
-        return Collections.emptyList();
+        List<Vacancy> vacancies = new ArrayList<>();
+        if(searchString.isEmpty()){
+            return Collections.emptyList();
+        }
+        try{
+            Document document = Jsoup.connect(URL_FORMAT).get();
+            System.out.println(document);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return vacancies;
     }
 }
