@@ -1,33 +1,37 @@
 package Java_Collections.level_9.lesson_9.task_4;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 
 /**
  * @author Ivan Korol on 6/22/2018
  */
 public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.println("Please type in a number: ");
-
-        long number = Long.parseLong(reader.readLine());
-        System.out.println("Please type in first index: ");
-        int i = Integer.parseInt(reader.readLine());
-        System.out.println("Please type in second index: ");
-        int j = Integer.parseInt(reader.readLine());
-
-        System.out.println("The result of swapping bits is " + swapBits(number, i, j));
+    private static int n = 70;
+    static HashMap<Integer, Long> map = new HashMap<>();
+    static {
+        map.put(0, 1L);
+        map.put(1, 1L);
+        map.put(2, 2L);
+        map.put(3, 4L);
+    }
+    public static void main(String[] args) {
+        System.out.println("Number of possible runups for " + n + " stairs is: " + countPossibleRunups(n));
     }
 
-    public static long swapBits(long number, int i, int j) {
-        long a = number >> i & 1;
-        long b = number >> j & 1;
-        if(a != b) {
-            number = number & ~((1 << i) | (1 << j)) | (a << j) | (b << i);
+    public static long countPossibleRunups(int n) {
+        if(n == 0) {
+            return 1;
         }
-        return number;
+        if (n < 0) {
+            return 0;
+        }
+        if (map.containsKey(n)) {
+            return map.get(n);
+        } else {
+            long fibonacciValue = ((countPossibleRunups(n - 3) + countPossibleRunups(n - 2))  + countPossibleRunups(n - 1));
+            map.put(n, fibonacciValue);
+            return fibonacciValue;
+        }
+
     }
 }
