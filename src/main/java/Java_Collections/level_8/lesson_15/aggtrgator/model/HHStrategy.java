@@ -34,8 +34,8 @@ public class HHStrategy implements Strategy {
             return Collections.emptyList();
         }
         try{
-            Document document = Jsoup.connect(URL_FORMAT).get();
-            System.out.println(document);
+            Document document = Jsoup.connect(URL_FORMAT).userAgent("Chrome (jsoup)").referrer("?").get();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
