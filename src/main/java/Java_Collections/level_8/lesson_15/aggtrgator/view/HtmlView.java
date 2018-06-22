@@ -3,6 +3,9 @@ package Java_Collections.level_8.lesson_15.aggtrgator.view;
 import Java_Collections.level_8.lesson_15.aggtrgator.Controller;
 import Java_Collections.level_8.lesson_15.aggtrgator.vo.Vacancy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,7 +13,7 @@ import java.util.List;
  */
 public class HtmlView implements View {
     private Controller controller;
-    private final String filePath = "./src/" + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/vacancies.html";
+    private final String filePath = "./src/main/java/" + this.getClass().getPackage().getName().replaceAll("\\.", "/") + "/vacancies.html";
 
     @Override
     public void update(List<Vacancy> vacancies) {
@@ -38,6 +41,12 @@ public class HtmlView implements View {
     }
 
     private void updateFile(String s) {
-
+        try{
+            FileWriter fileWriter = new FileWriter(new File(filePath));
+            fileWriter.write(s);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
