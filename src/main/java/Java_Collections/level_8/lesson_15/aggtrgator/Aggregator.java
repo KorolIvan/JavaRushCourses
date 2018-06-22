@@ -1,8 +1,8 @@
 package Java_Collections.level_8.lesson_15.aggtrgator;
 
 
+import Java_Collections.level_8.lesson_15.aggtrgator.model.HHStrategy;
 import Java_Collections.level_8.lesson_15.aggtrgator.model.Provider;
-import Java_Collections.level_8.lesson_15.aggtrgator.model.Strategy;
 
 /**
  * @author Ivan Korol on 6/21/2018
@@ -10,10 +10,8 @@ import Java_Collections.level_8.lesson_15.aggtrgator.model.Strategy;
 public class Aggregator {
     public static void main(String[] args) {
 
-        Provider provider = new Provider(new Strategy() {
-        });
-//        Provider[] arrPro = new Provider[]{provider};
+        Provider provider = new Provider(new HHStrategy());
         Controller controller = new Controller(provider);
-        System.out.println(controller);
+        controller.scan();
     }
 }
