@@ -1,36 +1,21 @@
 package Java_Collections.level_8.lesson_15.aggtrgator;
 
-import Java_Collections.level_8.lesson_15.aggtrgator.model.Provider;
-import Java_Collections.level_8.lesson_15.aggtrgator.vo.Vacancy;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import Java_Collections.level_8.lesson_15.aggtrgator.model.Model;
 
 /**
  * @author Ivan Korol on 6/21/2018
  */
 public class Controller {
-    private Provider[] providers;
+    Model model;
 
-    public Controller(Provider... providers) {
-        if(providers.length==0) {
-            throw new IllegalArgumentException();
+    public Controller(Model model) {
+        if(model == null) {
+            throw  new IllegalArgumentException();
         }
-        this.providers = providers;
-    }
-    @Override
-    public String toString() {
-        return "Controller{" +
-                "providers=" + Arrays.toString(providers) +
-                '}';
+        this.model = model;
     }
 
-    public void scan() {
-        List<Vacancy> vacancies = new ArrayList<>();
-        for(int i = 0; i < providers.length; i++) {
-            vacancies.addAll(providers[i].getJavaVacancies("?"));
-        }
-        System.out.println(vacancies.size());
+    public void onCitySelect(String cityName) {
+        model.selectCity(cityName);
     }
 }
