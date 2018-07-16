@@ -1,27 +1,33 @@
 package Java_Collections.level_9.cashMachine.command;
 
+import Java_Collections.level_9.cashMachine.CashMachine;
 import Java_Collections.level_9.cashMachine.ConsoleHelper;
 import Java_Collections.level_9.cashMachine.CurrencyManipulator;
 import Java_Collections.level_9.cashMachine.CurrencyManipulatorFactory;
 import Java_Collections.level_9.cashMachine.exception.InterruptOperationException;
+
+import java.util.ResourceBundle;
 
 
 /**
  * @author Ivan Korol on 7/16/2018
  */
 class DepositCommand implements Command {
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + ".deposit_en");
+
     @Override
     public void execute() throws InterruptOperationException{
-        String currencyCode;
+        ConsoleHelper.writeMessage(res.getString("before"));
+        String curCode = ConsoleHelper.askCurrencyCode();
+        String[] moneyAndAmount = ConsoleHelper.getValidTwoDigits(curCode);
+        CurrencyManipulator temp = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(curCode);
         try {
-            currencyCode = ConsoleHelper.askCurrencyCode();
-            CurrencyManipulator currencyManipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
-            String[] s = ConsoleHelper.getValidTwoDigits(currencyCode);
-            int nominal = Integer.parseInt(s[0]);
-            int total = Integer.parseInt(s[1]);
-            currencyManipulator.addAmount(nominal, total);
-        } catch (NumberFormatException  e) {
-            ConsoleHelper.writeMessage("Error!");
+            int k = Integer.parseInt(moneyAndAmount[0]);
+            int l = Integer.parseInt(moneyAndAmount[1]);
+            temp.addAmount(k, l);
+            ConsoleHelper.writeMessage(String.format(res.getString("success.format"), k * l, curCode));
+        } catch (NumberFormatException ex) {
+            ConsoleHelper.writeMessage(res.getString("invalid.data"));
         }
     }
 }
