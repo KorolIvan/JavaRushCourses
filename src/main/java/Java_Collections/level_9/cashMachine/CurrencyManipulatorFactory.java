@@ -1,5 +1,6 @@
 package Java_Collections.level_9.cashMachine;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,10 @@ public abstract class CurrencyManipulatorFactory {
             map.put(currencyCode.toUpperCase(), new CurrencyManipulator(currencyCode));
 
         return map.get(currencyCode.toUpperCase());
+    }
+
+    public static Collection<CurrencyManipulator> getAllCurrencyManipulators() {
+        return map.values();
     }
 
 }
