@@ -17,4 +17,43 @@ public class ConsoleHelper {
     public static String readString() throws IOException {
         return bis.readLine();
     }
+
+    public static String askCurrencyCode() throws IOException {
+        String currencyCode = null;
+        while (true) {
+            writeMessage("Please choice currency code: ");
+            currencyCode = readString();
+            if (currencyCode.length() == 3) {
+                break;
+            }else {
+                writeMessage("Error, please try again");
+            }
+        }
+
+        return currencyCode.toUpperCase();
+    }
+
+    public static String[] getValidTwoDigits(String currencyCode) throws IOException {
+        writeMessage("Input nominal and total");
+        String[] input;
+        while (true) {
+            input = readString().split(" ");
+
+            int nominal = 0;
+            int total = 0;
+            try {
+                nominal = Integer.parseInt(input[0]);
+                total = Integer.parseInt(input[1]);
+            } catch (Exception e) {
+                writeMessage("Error, Repeat again:");
+                continue;
+            }
+            if (nominal <= 0 || total <= 0) {
+                writeMessage("Error, Repeat again:");
+                continue;
+            }
+            break;
+        }
+        return input;
+    }
 }
