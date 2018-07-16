@@ -1,49 +1,57 @@
 package Java_Collections.level_9.cashMachine.command;
 
+import Java_Collections.level_9.cashMachine.CashMachine;
 import Java_Collections.level_9.cashMachine.ConsoleHelper;
 import Java_Collections.level_9.cashMachine.CurrencyManipulator;
 import Java_Collections.level_9.cashMachine.CurrencyManipulatorFactory;
 import Java_Collections.level_9.cashMachine.exception.InterruptOperationException;
 import Java_Collections.level_9.cashMachine.exception.NotEnoughMoneyException;
 
+import java.util.ResourceBundle;
+
 /**
  * @author Ivan Korol on 7/16/2018
  */
 class WithdrawCommand implements Command {
-    @Override
-    public void execute() throws InterruptOperationException {
-        String currencyCode;
-        currencyCode = ConsoleHelper.askCurrencyCode();
-        CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
-        int summ;
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + ".withdraw_en");
 
-        while (true) {
-            ConsoleHelper.writeMessage("please enter amount: ");
+    @Override
+    public void execute() throws InterruptOperationException
+    {
+        ConsoleHelper.writeMessage(res.getString("before"));
+        String currencyCode = ConsoleHelper.askCurrencyCode();
+        CurrencyManipulator currencyManipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
+        int sum;
+        while(true)
+        {
+            ConsoleHelper.writeMessage(res.getString("specify.amount"));
             String s = ConsoleHelper.readString();
             try
             {
-                summ = Integer.parseInt(s);
+                sum = Integer.parseInt(s);
             } catch (NumberFormatException e)
             {
                 continue;
             }
-            if (summ <= 0)
+            if (sum <= 0)
             {
-                ConsoleHelper.writeMessage("amount cannot be empty");
+                ConsoleHelper.writeMessage(res.getString("specify.not.empty.amount"));
                 continue;
             }
-            if (!manipulator.isAmountAvailable(summ))
+            if (!currencyManipulator.isAmountAvailable(sum))
             {
-                ConsoleHelper.writeMessage("not enough money");
+                ConsoleHelper.writeMessage(res.getString("not.enough.money"));
                 continue;
             }
             try
             {
-                manipulator.withdrawAmount(summ);
-            } catch (NotEnoughMoneyException e) {
-                e.printStackTrace();
+                currencyManipulator.withdrawAmount(sum);
+            } catch (NotEnoughMoneyException e)
+            {
+                ConsoleHelper.writeMessage(res.getString("exact.amount.not.available"));
+                continue;
             }
-            ConsoleHelper.writeMessage(String.format("success.format", summ, currencyCode));
+            ConsoleHelper.writeMessage(String.format(res.getString("success.format"), sum, currencyCode));
             break;
         }
 

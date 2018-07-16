@@ -5,79 +5,91 @@ import Java_Collections.level_9.cashMachine.exception.InterruptOperationExceptio
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ResourceBundle;
 
 /**
  * @author Ivan Korol on 7/16/2018
  */
 public class ConsoleHelper {
+    private static ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + ".common_en");
     private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void writeMessage(String message) {
-        System.out.println(message);
+    public static void writeMessage(String s) {
+        System.out.println(s);
     }
 
+    public static void printAvailableOperation() {
+        writeMessage( res.getString("operation.INFO") + ": 1;\n" +
+                res.getString("operation.DEPOSIT") + ": 2;\n" +
+                res.getString("operation.WITHDRAW") + ": 3;\n" +
+                res.getString("operation.EXIT") + ": 4\n");
+    }
+
+    public static Operation askOperation() throws InterruptOperationException{
+        while (true) {
+            writeMessage(res.getString("choose.operation"));
+            String operation = readString();
+            if (operation.equalsIgnoreCase("help")) {
+                printAvailableOperation();
+                operation = readString();
+            }
+            try {
+                return Operation.getAllowableOperationByOrdinal(Integer.parseInt(operation));
+            } catch (IllegalArgumentException ex) {
+                writeMessage(res.getString("invalid.data"));
+            }
+        }
+    }
     public static String readString() throws InterruptOperationException {
-        String input = "";
+        String result = "";
         try {
-            input = bis.readLine();
-            if (input.equalsIgnoreCase("exit")) {
+            result = bis.readLine();
+            if (result.equalsIgnoreCase("EXIT")) {
                 throw new InterruptOperationException();
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
         }
-
-        return input;
+        return result;
     }
 
     public static String askCurrencyCode() throws InterruptOperationException {
-        String currencyCode = null;
+        String test;
         while (true) {
-            writeMessage("Please choice currency code: ");
-            currencyCode = readString();
-            if (currencyCode.length() == 3) {
+            writeMessage(res.getString("choose.currency.code"));
+            test = readString();
+            if (test.length() == 3)
                 break;
-            } else {
-                writeMessage("Error, please try again");
-            }
+            writeMessage(res.getString("invalid.data"));
         }
-
-        return currencyCode.toUpperCase();
+        test = test.toUpperCase();
+        return test;
     }
 
     public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
-        writeMessage("Input nominal and total");
-        String[] input;
+        String[] array;
         while (true) {
-            input = readString().split(" ");
-
-            int nominal = 0;
-            int total = 0;
+            ConsoleHelper.writeMessage(String.format(res.getString("choose.denomination.and.count.format"), currencyCode));
+            String s = readString();
+            array = s.split(" ");
+            int k;
+            int l;
             try {
-                nominal = Integer.parseInt(input[0]);
-                total = Integer.parseInt(input[1]);
+                k = Integer.parseInt(array[0]);
+                l = Integer.parseInt(array[1]);
             } catch (Exception e) {
-                writeMessage("Error, Repeat again:");
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
-            if (nominal <= 0 || total <= 0) {
-                writeMessage("Error, Repeat again:");
+            if (k <= 0 || l <= 0 || array.length > 2) {
+                writeMessage(res.getString("invalid.data"));
                 continue;
             }
             break;
         }
-        return input;
+        return array;
     }
 
-    public static Operation askOperation() throws InterruptOperationException{
-        do {
-            writeMessage("select operation \n 1 Info \n 2 Deposit \n 3 Withdraw \n 4 Exit");
-            try {
-                int choice = Integer.parseInt(readString());
-                return Operation.getAllowableOperationByOrdinal(choice);
-            } catch (IllegalArgumentException e) {
-                writeMessage("your input is wrong. Please try again!");
-                continue;
-            }
-        } while (true);
+    public static void printExitMessage() {
+        ConsoleHelper.writeMessage(res.getString("the.end"));
     }
 }
