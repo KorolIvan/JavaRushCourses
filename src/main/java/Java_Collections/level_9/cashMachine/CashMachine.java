@@ -10,6 +10,7 @@ import java.util.Locale;
  * @author Ivan Korol on 7/16/2018
  */
 public class CashMachine {
+    public static final String RESOURCE_PATH = CashMachine.class.getPackage().getName() + ".resources.";
     public static void main(String[] args) {
         Locale.setDefault(Locale.ENGLISH);
         try {

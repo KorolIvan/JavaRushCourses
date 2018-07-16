@@ -1,12 +1,16 @@
 package Java_Collections.level_9.cashMachine.command;
 
+import Java_Collections.level_9.cashMachine.CashMachine;
 import Java_Collections.level_9.cashMachine.ConsoleHelper;
 import Java_Collections.level_9.cashMachine.exception.InterruptOperationException;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Ivan Korol on 7/16/2018
  */
 class LoginCommand implements Command {
+    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + ".verifiedCards");
     @Override
     public void execute() throws InterruptOperationException {
         while (true) {
@@ -16,8 +20,8 @@ class LoginCommand implements Command {
                 throw new InterruptOperationException();
             }
             String s2 = ConsoleHelper.readString();
-            if ("123456789012".equals(s1)) {
-                if ("1234".equals(s2))
+            if (validCreditCards.containsKey(s1)) {
+                if (validCreditCards.getString(s1).equals(s2))
                     ConsoleHelper.writeMessage(String.format("Credit card [%s] is verified successfully!", s1));
                 else {
                     ConsoleHelper.writeMessage(String.format("Credit card [%s] is not verified", s1));
