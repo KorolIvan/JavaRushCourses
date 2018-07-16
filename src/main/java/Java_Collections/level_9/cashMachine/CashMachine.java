@@ -25,5 +25,6 @@ public class CashMachine {
         }/*catch (NotEnoughMoneyException e) {
             e.printStackTrace();
         }*/
+        ConsoleHelper.printExitMessage();
     }
 }
