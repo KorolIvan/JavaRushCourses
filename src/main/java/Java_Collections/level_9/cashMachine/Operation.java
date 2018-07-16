@@ -4,6 +4,7 @@ package Java_Collections.level_9.cashMachine;
  * @author Ivan Korol on 7/16/2018
  */
 public enum Operation {
+    LOGIN,
     INFO,
     DEPOSIT,
     WITHDRAW,
@@ -12,6 +13,8 @@ public enum Operation {
     public static Operation getAllowableOperationByOrdinal(Integer i) {
 
         switch (i) {
+            case 0:
+                throw new IllegalArgumentException();
             case 1:
                 return INFO;
             case 2:
