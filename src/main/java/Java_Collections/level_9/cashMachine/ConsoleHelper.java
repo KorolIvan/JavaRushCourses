@@ -1,5 +1,7 @@
 package Java_Collections.level_9.cashMachine;
 
+import Java_Collections.level_9.cashMachine.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,22 +12,31 @@ import java.io.InputStreamReader;
 public class ConsoleHelper {
     private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void writeMessage(String message){
+    public static void writeMessage(String message) {
         System.out.println(message);
     }
 
-    public static String readString() throws IOException {
-        return bis.readLine();
+    public static String readString() throws InterruptOperationException {
+        String input = "";
+        try {
+            input = bis.readLine();
+            if (input.equalsIgnoreCase("exit")) {
+                throw new InterruptOperationException();
+            }
+        } catch (IOException ignored) {
+        }
+
+        return input;
     }
 
-    public static String askCurrencyCode() throws IOException {
+    public static String askCurrencyCode() throws InterruptOperationException {
         String currencyCode = null;
         while (true) {
             writeMessage("Please choice currency code: ");
             currencyCode = readString();
             if (currencyCode.length() == 3) {
                 break;
-            }else {
+            } else {
                 writeMessage("Error, please try again");
             }
         }
@@ -33,7 +44,7 @@ public class ConsoleHelper {
         return currencyCode.toUpperCase();
     }
 
-    public static String[] getValidTwoDigits(String currencyCode) throws IOException {
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
         writeMessage("Input nominal and total");
         String[] input;
         while (true) {
@@ -57,16 +68,16 @@ public class ConsoleHelper {
         return input;
     }
 
-    public static Operation askOperation() {
+    public static Operation askOperation() throws InterruptOperationException{
         do {
             writeMessage("select operation \n 1 Info \n 2 Deposit \n 3 Withdraw \n 4 Exit");
             try {
                 int choice = Integer.parseInt(readString());
                 return Operation.getAllowableOperationByOrdinal(choice);
-            } catch (IllegalArgumentException | IOException e) {
+            } catch (IllegalArgumentException e) {
                 writeMessage("your input is wrong. Please try again!");
                 continue;
             }
-        }while (true);
+        } while (true);
     }
 }

@@ -1,6 +1,8 @@
 package Java_Collections.level_9.cashMachine.command;
 
 import Java_Collections.level_9.cashMachine.Operation;
+import Java_Collections.level_9.cashMachine.exception.InterruptOperationException;
+import Java_Collections.level_9.cashMachine.exception.NotEnoughMoneyException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class CommandExecutor {
     private CommandExecutor() {
     }
 
-    public static final void execute(Operation operation) {
+    public static final void execute(Operation operation) throws InterruptOperationException {
         allKnownCommandsMap.get(operation).execute();
     }
 
