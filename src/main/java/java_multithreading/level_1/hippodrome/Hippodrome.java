@@ -43,6 +43,20 @@ public class Hippodrome {
         System.out.println("\n\n\n\n\n\n\n\n\n\n");
     }
 
+    public Horse getWinner(){
+        Horse winner = getHorses().get(0);
+        for(Horse h: getHorses()) {
+            if (h.getDistance() >= winner.getDistance()) {
+                winner = h;
+            }
+        }
+        return winner;
+    }
+
+    public void printWinner(){
+        System.out.println(String.format("Winner is %s!", getWinner().getName()));
+    }
+
     public static void main(String[] args) {
         List<Horse> list = new ArrayList<>();
         list.add(new Horse("Splash", 3, 0));
