@@ -2,6 +2,7 @@ package Java_Collections.level_10.lesson_10.Sokoban.view;
 
 import Java_Collections.level_10.lesson_10.Sokoban.controller.Controller;
 import Java_Collections.level_10.lesson_10.Sokoban.controller.EventListener;
+import Java_Collections.level_10.lesson_10.Sokoban.model.GameObjects;
 
 import javax.swing.*;
 
@@ -29,5 +30,13 @@ public class View extends JFrame {
 
     public void setEventListener(EventListener eventListener) {
         field.setEventListener(eventListener);
+    }
+
+    public void update() {
+        field.repaint();
+    }
+
+    public GameObjects getGameObjects() {
+        return controller.getGameObjects();
     }
 }

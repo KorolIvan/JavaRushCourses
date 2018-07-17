@@ -1,6 +1,7 @@
 package Java_Collections.level_10.lesson_10.Sokoban.controller;
 
 import Java_Collections.level_10.lesson_10.Sokoban.model.Direction;
+import Java_Collections.level_10.lesson_10.Sokoban.model.GameObjects;
 import Java_Collections.level_10.lesson_10.Sokoban.model.Model;
 import Java_Collections.level_10.lesson_10.Sokoban.view.View;
 
@@ -15,10 +16,15 @@ public class Controller implements EventListener {
         view = new View(this);
         model = new Model();
         view.init();
+        model.restart();
     }
 
     public static void main(String[] args) {
         Controller controller = new Controller();
+    }
+
+    public GameObjects getGameObjects() {
+        return model.getGameObjects();
     }
 
     @Override
