@@ -19,7 +19,7 @@ public class Hippodrome {
     }
 
     public void run() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             move();
             try {
                 Thread.sleep(200);
@@ -64,5 +64,6 @@ public class Hippodrome {
         list.add(new Horse("Faster", 3, 0));
         game = new Hippodrome(list);
         game.run();
+        game.printWinner();
     }
 }
