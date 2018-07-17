@@ -18,8 +18,12 @@ public class Hippodrome {
         return horses;
     }
 
-    public void run() {
-
+    public void run() throws InterruptedException {
+        for(int i = 0; i <100; i ++) {
+            move();
+            Thread.sleep(200);
+            print();
+        }
     }
 
     public void move() {
