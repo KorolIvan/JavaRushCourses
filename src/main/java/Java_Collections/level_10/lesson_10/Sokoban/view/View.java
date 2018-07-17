@@ -1,6 +1,7 @@
 package Java_Collections.level_10.lesson_10.Sokoban.view;
 
 import Java_Collections.level_10.lesson_10.Sokoban.controller.Controller;
+import Java_Collections.level_10.lesson_10.Sokoban.controller.EventListener;
 
 import javax.swing.*;
 
@@ -24,5 +25,9 @@ public class View extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Сокобан");
         setVisible(true);
+    }
+
+    public void setEventListener(EventListener eventListener) {
+        field.setEventListener(eventListener);
     }
 }

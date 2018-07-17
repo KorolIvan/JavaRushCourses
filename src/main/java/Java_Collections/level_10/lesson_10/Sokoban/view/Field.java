@@ -1,5 +1,7 @@
 package Java_Collections.level_10.lesson_10.Sokoban.view;
 
+import Java_Collections.level_10.lesson_10.Sokoban.controller.EventListener;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,6 +10,7 @@ import java.awt.*;
  */
 public class Field extends JPanel {
     private View view;
+    private EventListener eventListener;
     public Field(View view) {
         this.view = view;
     }
@@ -15,5 +18,9 @@ public class Field extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+    }
+
+    public void setEventListener(EventListener eventListener) {
+        this.eventListener = eventListener;
     }
 }
