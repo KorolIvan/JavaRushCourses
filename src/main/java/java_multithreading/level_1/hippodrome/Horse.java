@@ -19,7 +19,11 @@ public class Horse {
     }
 
     public void print() {
-
+        int dis = (int)Math.floor(getDistance());
+        for(int i = 0; i < dis; i++) {
+            System.out.print(".");
+        }
+        System.out.println(getName());
     }
 
     public String getName() {
