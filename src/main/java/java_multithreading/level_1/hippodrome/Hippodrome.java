@@ -18,22 +18,26 @@ public class Hippodrome {
         return horses;
     }
 
-    public void run() throws InterruptedException {
-        for(int i = 0; i <100; i ++) {
+    public void run() {
+        for (int i = 0; i < 100; i++) {
             move();
-            Thread.sleep(200);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             print();
         }
     }
 
     public void move() {
-        for(Horse h: getHorses()) {
+        for (Horse h : getHorses()) {
             h.move();
         }
     }
 
     public void print() {
-        for(Horse h: getHorses()) {
+        for (Horse h : getHorses()) {
             h.print();
         }
         System.out.println("\n\n\n\n\n\n\n\n\n\n");
@@ -45,5 +49,6 @@ public class Hippodrome {
         list.add(new Horse("Luzzer", 3, 0));
         list.add(new Horse("Faster", 3, 0));
         game = new Hippodrome(list);
+        game.run();
     }
 }
