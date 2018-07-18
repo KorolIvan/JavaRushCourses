@@ -1,4 +1,4 @@
-package java_multithreading.level_2.task_2;
+package java_multithreading.level_2.lesson_5.task_2;
 
 /**
  * @author Ivan Korol on 7/18/2018
