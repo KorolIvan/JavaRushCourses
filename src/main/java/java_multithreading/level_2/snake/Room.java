@@ -1,5 +1,7 @@
 package java_multithreading.level_2.snake;
 
+import java.awt.event.KeyEvent;
+
 /**
  * @author Ivan Korol on 7/19/2018
  */
@@ -8,36 +10,68 @@ public class Room {
     private int height;
     private Snake snake;
     private Mouse mouse;
-    static Room game;
+    public static Room game;
 
     public Room(int width, int height, Snake snake) {
         this.width = width;
         this.height = height;
         this.snake = snake;
+        game = this;
     }
 
     public static void main(String[] args) {
-        Snake snake1 = new Snake(0, 0);
-        snake1.setDirection(SnakeDirection.DOWN);
-        game = new Room(0,0,snake1);
+        game = new Room(20, 20, new Snake(10, 10));
+        game.snake.setDirection(SnakeDirection.DOWN);
         game.createMouse();
         game.run();
 
     }
 
     public void run() {
+        KeyboardObserver keyboardObserver = new KeyboardObserver();
+        keyboardObserver.start();
 
+        //пока змея жива
+        while (snake.isAlive()) {
+            //"наблюдатель" содержит события о нажатии клавиш?
+            if (keyboardObserver.hasKeyEvents()) {
+                KeyEvent event = keyboardObserver.getEventFromTop();
+                //Если равно символу 'q' - выйти из игры.
+                if (event.getKeyChar() == 'q') return;
+
+                //Если "стрелка влево" - сдвинуть фигурку влево
+                if (event.getKeyCode() == KeyEvent.VK_LEFT)
+                    snake.setDirection(SnakeDirection.LEFT);
+                    //Если "стрелка вправо" - сдвинуть фигурку вправо
+                else if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+                    snake.setDirection(SnakeDirection.RIGHT);
+                    //Если "стрелка вверх" - сдвинуть фигурку вверх
+                else if (event.getKeyCode() == KeyEvent.VK_UP)
+                    snake.setDirection(SnakeDirection.UP);
+                    //Если "стрелка вниз" - сдвинуть фигурку вниз
+                else if (event.getKeyCode() == KeyEvent.VK_DOWN)
+                    snake.setDirection(SnakeDirection.DOWN);
+            }
+
+            snake.move();   //двигаем змею
+            print();        //отображаем текущее состояние игры
+            sleep();        //пауза между ходами
+        }
+
+        System.out.println("Game Over!");
     }
 
     public void print() {
-
+        //Создаем массив, куда будем "рисовать" текущее состояние игры
+        //Рисуем все кусочки змеи
+        //Рисуем мышь
+        //Выводим все это на экран
     }
 
     public void createMouse() {
         int x = (int) (Math.random()*width);
         int y = (int) (Math.random()*height);
         mouse = new Mouse(x,y);
-        setMouse(mouse);
     }
 
     public void eatMouse() {
@@ -45,6 +79,17 @@ public class Room {
     }
 
     public void sleep() {
+        try{
+            if(snake.getSections().size() < 11) {
+                Thread.sleep(500);
+            }else if(snake.getSections().size() >= 11 && snake.getSections().size() < 15) {
+                Thread.sleep(300);
+            }else {
+                Thread.sleep(200);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
