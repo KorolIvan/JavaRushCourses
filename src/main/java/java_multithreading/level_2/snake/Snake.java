@@ -39,20 +39,29 @@ public class Snake {
         }
     }
 
-    public void move(int x, int y) {
-        SnakeSection head = new SnakeSection(sections.get(0).getX() + x, sections.get(0).getY() + y);
-        checkBorders(head);
+    public void move(int dx, int dy) {
+        //Создаем новую голову - новый "кусочек змеи".
+        SnakeSection head = sections.get(0);
+        head = new SnakeSection(head.getX() + dx, head.getY() + dy);
 
+        //Проверяем - не вылезла ли голова за границу комнаты
+        checkBorders(head);
         if (!isAlive) return;
+
+        //Проверяем - не пересекает ли змея  саму себя
         checkBody(head);
         if (!isAlive) return;
-        sections.add(0, head);
 
-        if (sections.get(0).getX()  == Room.game.getMouse().getX() && sections.get(0).getY() == Room.game.getMouse().getY())
+        //Проверяем - не съела ли змея мышь.
+        Mouse mouse = Room.game.getMouse();
+        if (head.getX() == mouse.getX() && head.getY() == mouse.getY()) //съела
         {
-            Room.game.eatMouse();
-        } else {
-            sections.remove(sections.size() - 1);
+            sections.add(0, head);                  //Добавили новую голову
+            Room.game.eatMouse();                   //Хвот не удаляем, но создаем новую мышь.
+        } else //просто движется
+        {
+            sections.add(0, head);                  //добавили новую голову
+            sections.remove(sections.size() - 1);   //удалили последний элемент с хвоста
         }
     }
 
