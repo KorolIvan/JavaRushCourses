@@ -30,6 +30,17 @@ public class Room {
 
     }
 
+    public void createMouse() {
+        int x = (int) (Math.random()*width);
+        int y = (int) (Math.random()*height);
+        mouse = new Mouse(x,y);
+        setMouse(mouse);
+    }
+
+    public void eatMouse() {
+        createMouse();
+    }
+
     public int getWidth() {
         return width;
     }
