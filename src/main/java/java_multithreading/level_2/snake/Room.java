@@ -1,7 +1,7 @@
 package java_multithreading.level_2.snake;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author Ivan Korol on 7/19/2018
@@ -63,28 +63,32 @@ public class Room {
     }
 
     public void print() {
-        int[][] screen = new int[height][width];
-        List<SnakeSection> snakeSections = snake.getSections();
+        //Создаем массив, куда будем "рисовать" текущее состояние игры
+        int[][] matrix = new int[height][width];
 
-        for (SnakeSection snakeSection : snakeSections)
-            screen[snakeSection.getY()][snakeSection.getX()] = 1;
+        //Рисуем все кусочки змеи
+        ArrayList<SnakeSection> sections = new ArrayList<SnakeSection>(snake.getSections());
+        for (SnakeSection snakeSection : sections) {
+            matrix[snakeSection.getY()][snakeSection.getX()] = 1;
+        }
 
-        screen[snake.getY()][snake.getX()] = 2;
-        screen[mouse.getY()][mouse.getX()] = 3;
+        //Рисуем голову змеи (4 - если змея мертвая)
+        matrix[snake.getY()][snake.getX()] = snake.isAlive() ? 2 : 4;
 
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                if (screen[j][i] == 1)
-                    System.out.print("x");
-                else if (screen[j][i] == 2)
-                    System.out.print("X");
-                else if (screen[j][i] == 3)
-                    System.out.print("^");
-                else
-                    System.out.print(".");
+        //Рисуем мышь
+        matrix[mouse.getY()][mouse.getX()] = 3;
+
+        //Выводим все это на экран
+        String[] symbols = {" . ", " x ", " X ", "^_^", "RIP"};
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.out.print(symbols[matrix[y][x]]);
             }
             System.out.println();
         }
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 
     public void createMouse() {

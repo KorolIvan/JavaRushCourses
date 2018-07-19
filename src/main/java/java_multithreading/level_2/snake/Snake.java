@@ -43,6 +43,22 @@ public class Snake {
 
     }
 
+    public void checkBoarders(SnakeSection head) {
+        if ((head.getX()>=Room.game.getWidth())
+                ||(head.getY()>=Room.game.getHeight())
+                ||(head.getX()<0)
+                ||(head.getY()<0)){
+            isAlive=false;
+        }
+    }
+
+    public void checkBody(SnakeSection head){
+        if (sections.contains(head)){
+            isAlive=false;
+        }
+    }
+
+
     public List<SnakeSection> getSections() {
         return sections;
     }
@@ -59,3 +75,4 @@ public class Snake {
         this.direction = direction;
     }
 }
+
