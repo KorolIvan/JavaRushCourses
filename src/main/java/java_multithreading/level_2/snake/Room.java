@@ -101,19 +101,16 @@ public class Room {
         createMouse();
     }
 
+    private int initialDelay = 520;
+    private int delayStep = 20;
+
     public void sleep() {
         try {
-            if (snake.getSections().size() < 11) {
-                Thread.sleep(500);
-            } else if (snake.getSections().size() >= 11 && snake.getSections().size() < 15) {
-                Thread.sleep(300);
-            } else {
-                Thread.sleep(200);
-            }
+            int level = snake.getSections().size();
+            int delay = level < 15 ? (initialDelay - delayStep * level) : 200;
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-
     }
 
     public int getWidth() {
