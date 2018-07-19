@@ -1,6 +1,7 @@
 package java_multithreading.level_2.snake;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 /**
  * @author Ivan Korol on 7/19/2018
@@ -62,16 +63,34 @@ public class Room {
     }
 
     public void print() {
-        //Создаем массив, куда будем "рисовать" текущее состояние игры
-        //Рисуем все кусочки змеи
-        //Рисуем мышь
-        //Выводим все это на экран
+        int[][] screen = new int[height][width];
+        List<SnakeSection> snakeSections = snake.getSections();
+
+        for (SnakeSection snakeSection : snakeSections)
+            screen[snakeSection.getY()][snakeSection.getX()] = 1;
+
+        screen[snake.getY()][snake.getX()] = 2;
+        screen[mouse.getY()][mouse.getX()] = 3;
+
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                if (screen[j][i] == 1)
+                    System.out.print("x");
+                else if (screen[j][i] == 2)
+                    System.out.print("X");
+                else if (screen[j][i] == 3)
+                    System.out.print("^");
+                else
+                    System.out.print(".");
+            }
+            System.out.println();
+        }
     }
 
     public void createMouse() {
-        int x = (int) (Math.random()*width);
-        int y = (int) (Math.random()*height);
-        mouse = new Mouse(x,y);
+        int x = (int) (Math.random() * width);
+        int y = (int) (Math.random() * height);
+        mouse = new Mouse(x, y);
     }
 
     public void eatMouse() {
@@ -79,12 +98,12 @@ public class Room {
     }
 
     public void sleep() {
-        try{
-            if(snake.getSections().size() < 11) {
+        try {
+            if (snake.getSections().size() < 11) {
                 Thread.sleep(500);
-            }else if(snake.getSections().size() >= 11 && snake.getSections().size() < 15) {
+            } else if (snake.getSections().size() >= 11 && snake.getSections().size() < 15) {
                 Thread.sleep(300);
-            }else {
+            } else {
                 Thread.sleep(200);
             }
         } catch (InterruptedException e) {
