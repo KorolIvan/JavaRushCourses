@@ -20,6 +20,9 @@ public class Room {
         Snake snake1 = new Snake(0, 0);
         snake1.setDirection(SnakeDirection.DOWN);
         game = new Room(0,0,snake1);
+        game.createMouse();
+        game.run();
+
     }
 
     public void run() {
@@ -39,6 +42,10 @@ public class Room {
 
     public void eatMouse() {
         createMouse();
+    }
+
+    public void sleep() {
+
     }
 
     public int getWidth() {
