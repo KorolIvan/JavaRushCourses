@@ -3,7 +3,7 @@ package java_multithreading.level_3.lesson_13.Arkanoid;
 /**
  * @author Ivan Korol on 7/23/2018
  */
-public class BaseObject {
+public abstract class BaseObject {
     private double x;
     private double y;
     private double radius;
@@ -12,6 +12,14 @@ public class BaseObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
+    }
+
+    public abstract void draw(Canvas canvas);
+
+    public abstract void move();
+
+    public boolean isIntersec(BaseObject o) {
+        return Math.hypot(x-o.getX(),y-o.getY()) <= (radius + o.radius);
     }
 
     public double getX() {
