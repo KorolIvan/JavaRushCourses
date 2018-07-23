@@ -6,8 +6,14 @@ package java_multithreading.level_3.lesson_13.Arkanoid;
 public class Arkanoid {
     private int width;
     private int height;
+
     public static void main(String[] args) {
 
+    }
+
+    public Arkanoid(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     public int getWidth() {
