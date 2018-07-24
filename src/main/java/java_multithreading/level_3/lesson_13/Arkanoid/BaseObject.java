@@ -4,9 +4,9 @@ package java_multithreading.level_3.lesson_13.Arkanoid;
  * @author Ivan Korol on 7/23/2018
  */
 public abstract class BaseObject {
-    private double x;
-    private double y;
-    private double radius;
+    protected double x;
+    protected double y;
+    protected double radius;
 
     public BaseObject(double x, double y, double radius) {
         this.x = x;
