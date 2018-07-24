@@ -27,7 +27,23 @@ public class Arkanoid {
     }
 
     public void move() {
+        if(stand != null && ball != null) {
+            stand.move();
+            ball.move();
+        }
+    }
 
+    public void draw(Canvas canvas) {
+        //draw bricks
+        for (Brick brick : bricks) {
+            brick.draw(canvas);
+        }
+
+        //draw ball
+        ball.draw(canvas);
+
+        //draw stand
+        stand.draw(canvas);
     }
 
     public int getWidth() {
