@@ -1,5 +1,6 @@
 package java_multithreading.level_3.lesson_13.Arkanoid;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ public class Arkanoid {
     private Ball ball;
     private List<Brick> bricks;
     static Arkanoid game;
+    private boolean isGameOver = false;
 
     public static void main(String[] args) {
 
@@ -44,6 +46,37 @@ public class Arkanoid {
 
         //draw stand
         stand.draw(canvas);
+    }
+
+    public void checkBricksBump() {
+        for (Brick brick : new ArrayList<Brick>(bricks)) {
+            if (ball.isIntersec(brick)) {
+                double angle = Math.random() * 360;
+                ball.setDirection(angle);
+
+                bricks.remove(brick);
+            }
+        }
+    }
+
+    /*
+     * Проверяем столкновение с подставкой.
+     * Если столкновение было - шарик отлетает в случайном направлении  вверх 80..100 градусов.
+     */
+    public void checkStandBump() {
+        if (ball.isIntersec(stand)) {
+            double angle = 90 + 20 * (Math.random() - 0.5);
+            ball.setDirection(angle);
+        }
+    }
+
+    /*
+     * Проверяем - не улетел ли шарик через дно.
+     * Если да - игра окончена (isGameOver = true)
+     */
+    public void checkEndGame() {
+        if (ball.getY() > height)
+            isGameOver = true;
     }
 
     public int getWidth() {
