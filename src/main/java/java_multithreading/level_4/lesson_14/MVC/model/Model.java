@@ -6,4 +6,5 @@ package java_multithreading.level_4.lesson_14.MVC.model;
 public interface Model {
     ModelData getModelData();
     void loadUsers();
+    void loadDeletedUsers();
 }
