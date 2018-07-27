@@ -1,7 +1,7 @@
 package java_multithreading.level_4.lesson_14.MVC;
 
 import java_multithreading.level_4.lesson_14.MVC.controller.Controller;
-import java_multithreading.level_4.lesson_14.MVC.model.FakeModel;
+import java_multithreading.level_4.lesson_14.MVC.model.MainModel;
 import java_multithreading.level_4.lesson_14.MVC.model.Model;
 import java_multithreading.level_4.lesson_14.MVC.view.UsersView;
 
@@ -10,7 +10,7 @@ import java_multithreading.level_4.lesson_14.MVC.view.UsersView;
  */
 public class Solution {
     public static void main(String[] args) {
-        Model model = new FakeModel();
+        Model model = new MainModel();
         UsersView usersView = new UsersView();
         Controller controller = new Controller();
 
