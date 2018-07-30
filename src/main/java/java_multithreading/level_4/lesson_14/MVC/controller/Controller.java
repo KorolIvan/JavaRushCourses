@@ -1,6 +1,7 @@
 package java_multithreading.level_4.lesson_14.MVC.controller;
 
 import java_multithreading.level_4.lesson_14.MVC.model.Model;
+import java_multithreading.level_4.lesson_14.MVC.view.EditUserView;
 import java_multithreading.level_4.lesson_14.MVC.view.UsersView;
 
 /**
@@ -9,6 +10,7 @@ import java_multithreading.level_4.lesson_14.MVC.view.UsersView;
 public class Controller {
     private Model model;
     private UsersView usersView;
+    private EditUserView editUserView;
 
     public void onShowAllUsers() {
         model.loadUsers();
@@ -21,6 +23,10 @@ public class Controller {
 
     public void setUsersView(UsersView usersView) {
         this.usersView = usersView;
+    }
+
+    public void setEditUserView(EditUserView editUserView) {
+        this.editUserView = editUserView;
     }
 
     public void onShowAllDeletedUsers() {
