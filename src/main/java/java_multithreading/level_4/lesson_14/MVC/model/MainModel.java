@@ -49,4 +49,10 @@ public class MainModel implements Model {
         users.addAll(userService.getUsersBetweenLevels(1, 100));
         return userService.filterOnlyActiveUsers(users);
     }
+
+    @Override
+    public void changeUserData(String name, long id, int level) {
+        userService.createOrUpdateUser(name, id, level);
+        modelData.setUsers(getAllUsers());
+    }
 }
