@@ -3,6 +3,7 @@ package java_multithreading.level_4.lesson_14.MVC;
 import java_multithreading.level_4.lesson_14.MVC.controller.Controller;
 import java_multithreading.level_4.lesson_14.MVC.model.MainModel;
 import java_multithreading.level_4.lesson_14.MVC.model.Model;
+import java_multithreading.level_4.lesson_14.MVC.view.EditUserView;
 import java_multithreading.level_4.lesson_14.MVC.view.UsersView;
 
 /**
@@ -13,12 +14,16 @@ public class Solution {
         Model model = new MainModel();
         UsersView usersView = new UsersView();
         Controller controller = new Controller();
+        EditUserView editUserView = new EditUserView();
 
+        editUserView.setController(controller);
         usersView.setController(controller);
         controller.setModel(model);
         controller.setUsersView(usersView);
+        controller.setEditUserView(editUserView);
 
         usersView.fireEventShowAllUsers();
+        usersView.fireEventOpenUserEditForm(126L);
         usersView.fireEventShowDeletedUsers();
     }
 }
