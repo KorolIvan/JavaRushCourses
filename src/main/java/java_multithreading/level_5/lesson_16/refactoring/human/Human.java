@@ -1,9 +1,14 @@
 package java_multithreading.level_5.lesson_16.refactoring.human;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Ivan Korol on 7/31/2018
  */
 public class Human {
+    private List<Human> children = new ArrayList<>();
     public static int nextId = 0;
     private int id;
     protected int age;
@@ -68,6 +73,20 @@ public class Human {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Human> getChildren() {
+        return Collections.unmodifiableList(children);
+    }
+
+    public void addChild(Human human) {
+        children.add(human);
+    }
+
+    public void removeChild(Human human) {
+        if(children.contains(human)) {
+            children.remove(human);
+        }
     }
 
     public void printSize() {

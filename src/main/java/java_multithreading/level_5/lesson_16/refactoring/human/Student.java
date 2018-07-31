@@ -1,14 +1,11 @@
 package java_multithreading.level_5.lesson_16.refactoring.human;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Ivan Korol on 7/31/2018
  */
 public class Student extends Human {
-    private List<Human> children = new ArrayList<>();
     private double averageGrade;
     private String university;
     private Date beginningOfSession;
@@ -19,14 +16,6 @@ public class Student extends Human {
         this.name = name;
         this.age = age;
         this.averageGrade = averageGrade;
-    }
-
-    public List<Human> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Human> children) {
-        this.children = children;
     }
 
     public void live() {
