@@ -3,10 +3,9 @@ package java_multithreading.level_5.lesson_16.refactoring.human;
 /**
  * @author Ivan Korol on 7/31/2018
  */
-public class Teacher extends Human {
+public class Teacher extends UniversityPerson {
 
     private int numberOfStudents;
-    private String university;
 
     public Teacher(String name, int age, int numberOfStudents) {
         //super(false);
@@ -21,14 +20,6 @@ public class Teacher extends Human {
     }
 
     public void teach() {
-    }
-
-    public String getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(String university) {
-        this.university = university;
     }
 
     public void printData() {
