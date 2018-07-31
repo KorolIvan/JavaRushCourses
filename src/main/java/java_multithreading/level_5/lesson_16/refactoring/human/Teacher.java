@@ -9,7 +9,8 @@ public class Teacher extends Human {
     private String university;
 
     public Teacher(String name, int age, int numberOfStudents) {
-        super(false);
+        //super(false);
+        super(name, age);
         this.name = name;
         this.age = age;
         this.numberOfStudents = numberOfStudents;
