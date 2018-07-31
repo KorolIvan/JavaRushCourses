@@ -7,13 +7,12 @@ import java.util.List;
 /**
  * @author Ivan Korol on 7/31/2018
  */
-public class Human {
+public class Human implements Alive {
     private List<Human> children = new ArrayList<>();
     public static int nextId = 0;
     private int id;
     protected int age;
     protected String name;
-    protected int course;
 
     protected int[] size;
 
@@ -55,12 +54,6 @@ public class Human {
         this.name = name;
     }
 
-    public int getCourse() {
-        return course;
-    }
-
-
-
     public int getId() {
         return id;
     }
@@ -85,5 +78,10 @@ public class Human {
 
     public void printSize() {
         System.out.println("Рост: " + size[0] + " Вес: " + size[1]);
+    }
+
+    @Override
+    public void live() {
+
     }
 }

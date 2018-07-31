@@ -12,10 +12,6 @@ public class Worker {
         human = new Human(name, age);
     }
 
-    /*public void live() {
-        human.live();
-    }*/
-
     public double getSalary() {
         return salary;
     }
