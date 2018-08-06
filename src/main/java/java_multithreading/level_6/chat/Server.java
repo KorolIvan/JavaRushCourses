@@ -64,5 +64,18 @@ public class Server {
                 }
             }
         }
+
+        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
+            while (true) {
+                StringBuffer textMessage = new StringBuffer();
+                Message message = connection.receive();
+                if (message.getType() == MessageType.TEXT) {
+                    textMessage.append(userName + ": " + message.getData());
+                    sendBroadcastMessage(new Message(MessageType.TEXT, textMessage.toString()));
+                } else if (message.getType() != MessageType.TEXT){
+                    ConsoleHelper.writeMessage("Ошибка: в сообщении должен быть текст.");
+                }
+            }
+        }
     }
 }
