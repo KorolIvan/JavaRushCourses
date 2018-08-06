@@ -17,9 +17,7 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен");
             while (true) {
-                socket = serverSocket.accept();
-                Handler handler = new Handler(socket);
-                handler.start();
+                new Handler(serverSocket.accept()).start();
             }
 
         } catch (Exception e) {
@@ -76,6 +74,26 @@ public class Server {
                     ConsoleHelper.writeMessage("Ошибка: в сообщении должен быть текст.");
                 }
             }
+        }
+
+        @Override
+        public void run() {
+            ConsoleHelper.writeMessage("Соединение установлено: " + socket.getRemoteSocketAddress());
+            String usetName = null;
+            try (Connection connection = new Connection(socket)){
+                usetName = serverHandshake(connection);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, usetName));
+                sendListOfUsers(connection, usetName);
+                serverMainLoop(connection, usetName);
+            } catch (IOException | ClassNotFoundException e) {
+                ConsoleHelper.writeMessage("Произошла ошибка при обмене данными с удаленным адресом." + e.getMessage());
+            } finally {
+                if(usetName != null) {
+                    connectionMap.remove(usetName);
+                    sendBroadcastMessage(new Message(MessageType.USER_REMOVED, usetName));
+                }
+            }
+            ConsoleHelper.writeMessage("Соединение закрыто.");
         }
     }
 }
