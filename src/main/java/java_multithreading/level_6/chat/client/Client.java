@@ -16,6 +16,11 @@ public class Client {
     protected Connection connection;
     private volatile boolean clientConnected = false;
 
+    public static void main(String[] args) {
+        Client client = new Client();
+        client.run();
+    }
+
     protected String getServerAddress() {
         ConsoleHelper.writeMessage("Адрес сервера:");
         String address = ConsoleHelper.readString();
@@ -59,6 +64,35 @@ public class Client {
         } catch (IOException e) {
             ConsoleHelper.writeMessage("Сообщение не отправлено.");
             clientConnected = false;
+        }
+    }
+
+    public void run() {
+        SocketThread socketThread = getSocketThread();
+        socketThread.setDaemon(true);
+        socketThread.start();
+        try {
+            synchronized (this) {
+                this.wait();
+            }
+        } catch (InterruptedException e) {
+            ConsoleHelper.writeMessage("Wait error");
+            return;
+        }
+        if (clientConnected) {
+            ConsoleHelper.writeMessage("Соединение установлено. Для выхода наберите команду 'exit'.");
+        } else {
+            ConsoleHelper.writeMessage("Произошла ошибка во время работы клиента.");
+        }
+        while (clientConnected) {
+            String s;
+            if (!(s = ConsoleHelper.readString()).equals("exit")) {
+                if (shouldSendTextFromConsole()) {
+                    sendTextMessage(s);
+                }
+            } else {
+                return;
+            }
         }
     }
 
