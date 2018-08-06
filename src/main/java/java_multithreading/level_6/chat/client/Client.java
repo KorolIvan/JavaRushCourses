@@ -7,6 +7,7 @@ import java_multithreading.level_6.chat.Message;
 import java_multithreading.level_6.chat.MessageType;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.regex.Pattern;
 
 /**
@@ -148,6 +149,18 @@ public class Client {
                 } else {
                     throw new IOException("unexpected message type");
                 }
+            }
+        }
+
+        @Override
+        public void run() {
+            try {
+                Socket socket = new Socket(getServerAddress(), getServerPort());
+                Client.this.connection = new Connection(socket);
+                clientHandshake();
+                clientMainLoop();
+            } catch (IOException | ClassNotFoundException e) {
+                notifyConnectionStatusChanged(false);
             }
         }
     }
