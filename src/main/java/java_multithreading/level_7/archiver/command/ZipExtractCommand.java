@@ -21,7 +21,7 @@ public class ZipExtractCommand extends ZipCommand {
             zipFileManager.extractAll(outputPath);
             ConsoleHelper.writeMessage("Архив распакован.");
         } catch (PathIsNotFoundException e) {
-            ConsoleHelper.writeMessage("Вы неверно указали имя файла или директории.");
+            ConsoleHelper.writeMessage("Неверный путь для распаковки.");
         }
     }
 }
