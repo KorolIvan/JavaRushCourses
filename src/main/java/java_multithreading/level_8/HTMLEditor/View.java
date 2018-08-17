@@ -2,8 +2,12 @@ package java_multithreading.level_8.HTMLEditor;
 
 import java_multithreading.level_8.HTMLEditor.listeners.FrameListener;
 import java_multithreading.level_8.HTMLEditor.listeners.TabbedPaneChangeListener;
+import java_multithreading.level_8.HTMLEditor.listeners.UndoListener;
 
 import javax.swing.*;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +20,8 @@ public class View extends JFrame implements ActionListener {
     private JTabbedPane tabbedPane = new JTabbedPane();
     private JTextPane htmlTextPane = new JTextPane();
     private JEditorPane plainTextPane = new JEditorPane();
+    private UndoManager undoManager = new UndoManager();
+    private UndoListener undoListener = new UndoListener(undoManager);
 
     public View() {
         try {
@@ -47,7 +53,7 @@ public class View extends JFrame implements ActionListener {
         JMenuBar menuBar = new JMenuBar();
         MenuHelper.initFileMenu(this, menuBar);
         MenuHelper.initEditMenu(this, menuBar);
-        MenuHelper. initStyleMenu(this, menuBar);
+        MenuHelper.initStyleMenu(this, menuBar);
         MenuHelper.initAlignMenu(this, menuBar);
         MenuHelper.initColorMenu(this, menuBar);
         MenuHelper.initFontMenu(this, menuBar);
@@ -56,12 +62,12 @@ public class View extends JFrame implements ActionListener {
     }
 
     public void initEditor() {
-       htmlTextPane.setContentType("text/html");
-       tabbedPane.addTab("HTML", new JScrollPane(htmlTextPane));
-       tabbedPane.addTab("Текст", new JScrollPane(plainTextPane));
-       tabbedPane.setPreferredSize(new Dimension(800, 600));
-       tabbedPane.addChangeListener(new TabbedPaneChangeListener(this));
-       getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        htmlTextPane.setContentType("text/html");
+        tabbedPane.addTab("HTML", new JScrollPane(htmlTextPane));
+        tabbedPane.addTab("Текст", new JScrollPane(plainTextPane));
+        tabbedPane.setPreferredSize(new Dimension(800, 600));
+        tabbedPane.addChangeListener(new TabbedPaneChangeListener(this));
+        getContentPane().add(tabbedPane, BorderLayout.CENTER);
     }
 
     public void initGui() {
@@ -75,15 +81,40 @@ public class View extends JFrame implements ActionListener {
     }
 
     public boolean canUndo() {
-        return false;
+        return undoManager.canUndo();
     }
 
     public boolean canRedo() {
-        return false;
+        return undoManager.canRedo();
+    }
+
+    public void undo() {
+        try {
+            undoManager.undo();
+        }catch (CannotUndoException e) {
+            ExceptionHandler.log(e);
+        }
+
+    }
+
+    public void redo() {
+        try {
+            undoManager.redo();
+        }catch (CannotRedoException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+
+    public void resetUndo() {
+        undoManager.discardAllEdits();
     }
 
     public void exit() {
         controller.exit();
+    }
+
+    public UndoListener getUndoListener() {
+        return undoListener;
     }
 
     public Controller getController() {
