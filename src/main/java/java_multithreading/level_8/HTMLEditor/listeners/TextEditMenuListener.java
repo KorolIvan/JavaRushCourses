@@ -2,8 +2,10 @@ package java_multithreading.level_8.HTMLEditor.listeners;
 
 import java_multithreading.level_8.HTMLEditor.View;
 
+import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import java.awt.*;
 
 /**
  * @author Ivan Korol on 8/17/2018
@@ -17,7 +19,11 @@ public class TextEditMenuListener implements MenuListener {
 
     @Override
     public void menuSelected(MenuEvent e) {
-
+        JMenu menu = (JMenu) e.getSource();
+        Component[] components = menu.getMenuComponents();
+        for(Component component: components) {
+            component.setEnabled(view.isHtmlTabSelected());
+        }
     }
 
     @Override
@@ -29,4 +35,6 @@ public class TextEditMenuListener implements MenuListener {
     public void menuCanceled(MenuEvent e) {
 
     }
+
+
 }
