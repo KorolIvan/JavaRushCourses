@@ -30,4 +30,8 @@ public class Controller {
         view1.init();
         controller.init();
     }
+
+    public HTMLDocument getDocument() {
+        return document;
+    }
 }
