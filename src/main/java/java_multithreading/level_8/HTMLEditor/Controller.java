@@ -1,8 +1,11 @@
 package java_multithreading.level_8.HTMLEditor;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * @author Ivan Korol on 8/16/2018
@@ -27,6 +30,16 @@ public class Controller {
         document = (HTMLDocument) new HTMLEditorKit().createDefaultDocument();
         document.addUndoableEditListener(view.getUndoListener());
         view.update();
+    }
+
+    public void setPlainText(String text) {
+        resetDocument();
+        StringReader stringReader = new StringReader(text);
+        try {
+            new HTMLEditorKit().read(stringReader, document, 0);
+        } catch (IOException | BadLocationException e) {
+            ExceptionHandler.log(e);
+        }
     }
 
     public void exit() {
