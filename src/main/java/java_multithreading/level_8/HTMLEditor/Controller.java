@@ -1,12 +1,10 @@
 package java_multithreading.level_8.HTMLEditor;
 
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 
 /**
  * @author Ivan Korol on 8/16/2018
@@ -82,7 +80,19 @@ public class Controller {
     }
 
     public void saveDocumentAs() {
-
+        view.selectHtmlTab();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new HTMLFileFilter());
+        int n = fileChooser.showSaveDialog(view);
+        if(n == JFileChooser.APPROVE_OPTION) {
+            currentFile = fileChooser.getSelectedFile();
+            view.setTitle(currentFile.getName());
+            try(FileWriter writer = new FileWriter(currentFile)) {
+                new HTMLEditorKit().write(writer, document, 0, document.getLength());
+            } catch (IOException | BadLocationException e) {
+                ExceptionHandler.log(e);
+            }
+        }
     }
 
     public HTMLDocument getDocument() {
