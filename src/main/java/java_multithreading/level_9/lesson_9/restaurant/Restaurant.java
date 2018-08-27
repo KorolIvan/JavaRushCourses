@@ -5,6 +5,9 @@ package java_multithreading.level_9.lesson_9.restaurant;
  */
 public class Restaurant {
     public static void main(String[] args) {
-
+        Tablet tablet = new Tablet(5);
+        for(int i = 0; i < 4; i++) {
+            tablet.createOrder();
+        }
     }
 }
