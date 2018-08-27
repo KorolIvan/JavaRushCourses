@@ -12,6 +12,7 @@ import java.util.List;
 public class Order {
     private final Tablet tablet;
     protected List<Dish> dishes;
+    private boolean empty;
 
     public Order(Tablet tablet) throws IOException {
         this.tablet = tablet;
@@ -26,5 +27,9 @@ public class Order {
         else {
             return "Your order: " + dishes.toString() +" of "+  tablet.toString();
         }
+    }
+
+    public boolean isEmpty() {
+        return dishes.isEmpty();
     }
 }
