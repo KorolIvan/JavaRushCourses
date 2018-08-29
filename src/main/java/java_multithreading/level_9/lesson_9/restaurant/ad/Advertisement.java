@@ -20,6 +20,13 @@ public class Advertisement {
         this.amountPerOneDisplaying = initialAmount/hits;
     }
 
+    public void revalidate() {
+        if(hits <= 0) {
+            throw new UnsupportedOperationException();
+        }
+        hits--;
+    }
+
     public String getName() {
         return name;
     }

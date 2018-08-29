@@ -1,6 +1,7 @@
 package java_multithreading.level_9.lesson_9.restaurant;
 
 import java_multithreading.level_9.lesson_9.restaurant.ad.AdvertisementManager;
+import java_multithreading.level_9.lesson_9.restaurant.ad.NoVideoAvailableException;
 import java_multithreading.level_9.lesson_9.restaurant.kitchen.Order;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class Tablet extends Observable {
         } catch (IOException e) {
             logger.log(Level.SEVERE,"Console is unavailable.");
             return null;
+        } catch (NoVideoAvailableException e) {
+            logger.log(Level.INFO, "No video is available for the order " + order);
         }
         return order;
     }

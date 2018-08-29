@@ -1,7 +1,5 @@
 package java_multithreading.level_9.lesson_9.restaurant.ad;
 
-import java_multithreading.level_9.lesson_9.restaurant.ConsoleHelper;
-
 /**
  * @author Ivan Korol on 8/28/2018
  */
@@ -14,6 +12,9 @@ public class AdvertisementManager {
     }
 
     public void processVideos() {
-        ConsoleHelper.writeMessage("calling processVideos method");
+        //ConsoleHelper.writeMessage("calling processVideos method");
+        if (storage.list().isEmpty()) {
+            throw  new NoVideoAvailableException();
+        }
     }
 }
