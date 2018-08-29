@@ -1,5 +1,6 @@
 package java_multithreading.level_9.lesson_9.restaurant;
 
+import java_multithreading.level_9.lesson_9.restaurant.ad.AdvertisementManager;
 import java_multithreading.level_9.lesson_9.restaurant.kitchen.Order;
 
 import java.io.IOException;
@@ -20,12 +21,15 @@ public class Tablet extends Observable {
 
     public Order createOrder() {
         Order order = null;
+        AdvertisementManager advertisementManager = null;
         try {
             order = new Order(this);
+            advertisementManager = new AdvertisementManager(order.getTotalCookingTime()*60);
             if(!order.isEmpty()) {
                 ConsoleHelper.writeMessage(order.toString());
                 setChanged();
                 notifyObservers(order);
+                advertisementManager.processVideos();
             }
 
         } catch (IOException e) {
