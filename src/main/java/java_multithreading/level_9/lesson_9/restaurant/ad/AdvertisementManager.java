@@ -1,6 +1,9 @@
 package java_multithreading.level_9.lesson_9.restaurant.ad;
 
 import java_multithreading.level_9.lesson_9.restaurant.ConsoleHelper;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.event.NoAvailableVideoEventDataRow;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +43,7 @@ public class AdvertisementManager {
             totalAmount += ad.getAmountPerOneDisplaying();
             totalDuration += ad.getDuration();
         }
+        StatisticManager.getInstance().register(new VideoSelectedEventDataRow(bestVariant, totalAmount, totalDuration));
     }
 
     private List<Advertisement> pickVideosToList(List<Advertisement> previousList, Advertisement previousAd, int remainingTime,
@@ -68,7 +72,7 @@ public class AdvertisementManager {
         } else if (profit == maxProfit && remainingTime == minRemainingTime && bestResult.size() > newList.size())
             bestResult = newList;
         if (bestResult.isEmpty()) {
-//            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(timeSeconds));
+            StatisticManager.getInstance().register(new NoAvailableVideoEventDataRow(timeSeconds));
             throw new NoVideoAvailableException();
         }
         Collections.sort(bestResult, new Comparator<Advertisement>() {

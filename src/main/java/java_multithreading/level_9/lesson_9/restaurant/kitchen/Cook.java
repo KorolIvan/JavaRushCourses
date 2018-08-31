@@ -1,6 +1,8 @@
 package java_multithreading.level_9.lesson_9.restaurant.kitchen;
 
 import java_multithreading.level_9.lesson_9.restaurant.ConsoleHelper;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.event.CookedOrderEventDataRow;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -25,6 +27,8 @@ public class Cook extends Observable implements Observer {
         if (arg instanceof Order) {
             Order order = (Order) arg;
             ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + order.getTotalCookingTime() + "min");
+            StatisticManager.getInstance().register(new CookedOrderEventDataRow(((Order) arg).getTablet().toString(),
+                    this.name, ((Order) arg).getTotalCookingTime() ,((Order) arg).getDishes()));
             setChanged();
             notifyObservers(arg);
         }
