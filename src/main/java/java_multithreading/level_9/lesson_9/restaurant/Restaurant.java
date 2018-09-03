@@ -2,6 +2,7 @@ package java_multithreading.level_9.lesson_9.restaurant;
 
 import java_multithreading.level_9.lesson_9.restaurant.kitchen.Cook;
 import java_multithreading.level_9.lesson_9.restaurant.kitchen.Waiter;
+import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +16,18 @@ public class Restaurant {
         Cook cook = new Cook("Amigo");
         Cook cook2 = new Cook("Fry");
         List<Tablet> tablets = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            Tablet tablet = new Tablet(i);
+        StatisticManager.getInstance().register(cook);
+        StatisticManager.getInstance().register(cook2);
+        for (int i = 0; i < 5; i++) {
+            Tablet tablet = new Tablet(i+1);
+            tablet.addObserver(cook);
+            tablet.addObserver(cook2);
             tablets.add(tablet);
-            if (i%2 == 0) tablet.addObserver(cook2);
-            else tablet.addObserver(cook);
         }
         Waiter waiter = new Waiter();
         cook.addObserver(waiter);
         cook2.addObserver(waiter);
         Thread thread = new Thread(new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL));
-        //thread.setDaemon(true);
         thread.start();
         try {
             Thread.sleep(1000);
