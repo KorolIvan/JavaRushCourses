@@ -107,4 +107,8 @@ public class StatisticManager {
         }
         return result;
     }
+
+    public Set<Cook> getCooks() {
+        return cooks;
+    }
 }

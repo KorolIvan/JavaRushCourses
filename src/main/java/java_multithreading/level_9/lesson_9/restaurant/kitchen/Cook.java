@@ -5,13 +5,19 @@ import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManage
 import java_multithreading.level_9.lesson_9.restaurant.statistic.event.CookedOrderEventDataRow;
 
 import java.util.Observable;
-import java.util.Observer;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Ivan Korol on 8/27/2018
  */
-public class Cook extends Observable implements Observer {
+public class Cook extends Observable implements Runnable {
     private final String name;
+    private boolean busy;
+    private LinkedBlockingQueue<Order> queue;
+
+    public void setQueue(LinkedBlockingQueue<Order> queue) {
+        this.queue = queue;
+    }
 
     public Cook(String name) {
         this.name = name;
@@ -22,7 +28,6 @@ public class Cook extends Observable implements Observer {
         return  name;
     }
 
-    @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Order) {
             Order order = (Order) arg;
@@ -33,5 +38,39 @@ public class Cook extends Observable implements Observer {
             notifyObservers(arg);
         }
 
+    }
+
+    public void startCookingOrder(Order order) {
+        this.busy = true;
+        int orderTime = order.getTotalCookingTime();
+        ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + orderTime + "min");
+        CookedOrderEventDataRow eventDataRow = new CookedOrderEventDataRow(order.getTablet().toString(), name, orderTime * 60, order.getDishes());
+        StatisticManager.getInstance().register(eventDataRow);
+        setChanged();
+        notifyObservers(order);
+        try {
+            Thread.sleep(orderTime * 10);
+        } catch (InterruptedException e) {
+        }
+        this.busy = false;
+    }
+
+    public boolean isBusy() {return busy;}
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                startCookingOrder(queue.take());
+            }
+            catch (InterruptedException e) {}
+            try {
+                Thread.sleep(10);
+            }
+            catch (InterruptedException e) {
+                busy = true;
+            }
+            if (busy && queue.isEmpty()) break;
+        }
     }
 }

@@ -7,6 +7,7 @@ import java_multithreading.level_9.lesson_9.restaurant.kitchen.TestOrder;
 
 import java.io.IOException;
 import java.util.Observable;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 public class Tablet extends Observable {
     private final int number;
     private static Logger logger = Logger.getLogger(Tablet.class.getName());
+    private LinkedBlockingQueue<Order> queue;
 
     public Tablet(int number) {
         this.number = number;
@@ -70,6 +72,10 @@ public class Tablet extends Observable {
             setChanged();
             notifyObservers(order);
         }
+    }
+
+    public void setQueue(LinkedBlockingQueue<Order> queue) {
+        this.queue = queue;
     }
 
     public int getNumber() {
