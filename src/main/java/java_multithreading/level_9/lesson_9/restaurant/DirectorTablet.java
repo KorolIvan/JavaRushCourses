@@ -1,11 +1,11 @@
 package java_multithreading.level_9.lesson_9.restaurant;
 
+import java_multithreading.level_9.lesson_9.restaurant.ad.Advertisement;
+import java_multithreading.level_9.lesson_9.restaurant.ad.StatisticAdvertisementManager;
 import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Ivan Korol on 9/3/2018
@@ -36,11 +36,22 @@ public class DirectorTablet {
     }
 
     public void printActiveVideoSet() {
-
+        if (StatisticAdvertisementManager.getInstance().getActiveVideoSet().isEmpty()) return;
+        for (Map.Entry<String, Integer> pair : StatisticAdvertisementManager.getInstance().getActiveVideoSet().entrySet()) {
+            ConsoleHelper.writeMessage(String.format("%s - %d", pair.getKey(), pair.getValue()));
+        }
     }
-
     public void printArchivedVideoSet() {
-
+        List<Advertisement> inactiveVideos = StatisticAdvertisementManager.getInstance().getInactiveVideoSet();
+        Collections.sort(inactiveVideos, new Comparator<Advertisement>() {
+            @Override
+            public int compare(Advertisement o1, Advertisement o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+        for (Advertisement advertisement : inactiveVideos) {
+            ConsoleHelper.writeMessage(advertisement.getName());
+        }
     }
 
 }
