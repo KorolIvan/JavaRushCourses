@@ -1,12 +1,10 @@
 package java_multithreading.level_9.lesson_9.restaurant.statistic;
 
+import java_multithreading.level_9.lesson_9.restaurant.kitchen.Cook;
 import java_multithreading.level_9.lesson_9.restaurant.statistic.event.EventDataRow;
 import java_multithreading.level_9.lesson_9.restaurant.statistic.event.EventType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Ivan Korol on 8/31/2018
@@ -14,6 +12,7 @@ import java.util.Map;
 public class StatisticManager {
     private static StatisticManager statisticManager = new StatisticManager();
     private StatisticStorage statisticStorage = new StatisticStorage();
+    private Set<Cook> cooks = new HashSet<>();
 
     public static StatisticManager getInstance() {
         return statisticManager;
@@ -41,5 +40,9 @@ public class StatisticManager {
             storage.put(data.getType(), eventDataRows);
         }
 
+    }
+
+    public void register(Cook cook) {
+        cooks.add(cook);
     }
 }
