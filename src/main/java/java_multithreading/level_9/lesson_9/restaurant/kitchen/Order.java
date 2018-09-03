@@ -41,6 +41,10 @@ public class Order {
         return totalTime;
     }
 
+    protected void initDishes() throws IOException {
+        this.dishes = ConsoleHelper.getAllDishesForOrder();
+    }
+
     public List<Dish> getDishes() {
         return dishes;
     }

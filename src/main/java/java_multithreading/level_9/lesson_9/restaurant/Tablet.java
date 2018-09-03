@@ -3,6 +3,7 @@ package java_multithreading.level_9.lesson_9.restaurant;
 import java_multithreading.level_9.lesson_9.restaurant.ad.AdvertisementManager;
 import java_multithreading.level_9.lesson_9.restaurant.ad.NoVideoAvailableException;
 import java_multithreading.level_9.lesson_9.restaurant.kitchen.Order;
+import java_multithreading.level_9.lesson_9.restaurant.kitchen.TestOrder;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -47,6 +48,28 @@ public class Tablet extends Observable {
         return "Tablet{" +
                 "number=" + number +
                 '}';
+    }
+
+    public void createTestOrder() {
+        TestOrder order = null;
+        try {
+            order = new TestOrder(this);
+            processOrder(order);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Console is unavailable.");
+        }
+    }
+    private void processOrder(Order order) {
+        if (!order.isEmpty()) {
+            ConsoleHelper.writeMessage(order.toString());
+            try {
+                new AdvertisementManager(order.getTotalCookingTime()*60).processVideos();
+            } catch (NoVideoAvailableException e) {
+                logger.log(Level.INFO, "No video is available for the order " + order);
+            }
+            setChanged();
+            notifyObservers(order);
+        }
     }
 
     public int getNumber() {
