@@ -41,18 +41,18 @@ public class Cook extends Observable implements Runnable {
     }
 
     public void startCookingOrder(Order order) {
-        this.busy = true;
+        busy = true;
         int orderTime = order.getTotalCookingTime();
         ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + orderTime + "min");
         CookedOrderEventDataRow eventDataRow = new CookedOrderEventDataRow(order.getTablet().toString(), name, orderTime * 60, order.getDishes());
         StatisticManager.getInstance().register(eventDataRow);
-        setChanged();
-        notifyObservers(order);
         try {
             Thread.sleep(orderTime * 10);
         } catch (InterruptedException e) {
         }
-        this.busy = false;
+        setChanged();
+        notifyObservers(order);
+         busy = false;
     }
 
     public boolean isBusy() {return busy;}

@@ -23,23 +23,24 @@ public class Restaurant {
         cook.setQueue(orderQueue);
         Cook cook2 = new Cook("Fry");
         cook2.setQueue(orderQueue);
+        Waiter waiter = new Waiter();
+        cook.addObserver(waiter);
+        cook2.addObserver(waiter);
         OrderManager orderManager = new OrderManager();
         List<Tablet> tablets = new ArrayList<>();
         StatisticManager.getInstance().register(cook);
         StatisticManager.getInstance().register(cook2);
         for (int i = 0; i < 5; i++) {
             Tablet tablet = new Tablet(i+1);
-            //tablet.setQueue(orderQueue);
-            tablet.addObserver(orderManager);
+            tablet.setQueue(orderQueue);
+            //tablet.addObserver(orderManager);
             tablets.add(tablet);
         }
-        Waiter waiter = new Waiter();
-        cook.addObserver(waiter);
-        cook2.addObserver(waiter);
+
         Thread randomOrderGeneratorTaskThread = new Thread(new RandomOrderGeneratorTask(tablets, ORDER_CREATING_INTERVAL));
         Thread thread = new Thread(randomOrderGeneratorTaskThread);
-        Thread cookThread1 = new Thread((Runnable) cook);
-        Thread cookThread2 = new Thread((Runnable) cook2);
+        Thread cookThread1 = new Thread(cook);
+        Thread cookThread2 = new Thread(cook2);
         thread.start();
         cookThread1.start();
         cookThread2.start();
