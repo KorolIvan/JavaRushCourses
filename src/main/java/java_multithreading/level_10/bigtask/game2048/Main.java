@@ -5,6 +5,6 @@ package java_multithreading.level_10.bigtask.game2048;
  */
 public class Main {
     public static void main(String[] args) {
-
+        Model model = new Model();
     }
 }
