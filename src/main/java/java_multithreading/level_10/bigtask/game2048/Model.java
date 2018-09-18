@@ -50,26 +50,45 @@ public class Model {
         }
     }
 
-    private void compressTiles(Tile[] tiles) {
+    private boolean compressTiles(Tile[] tiles) {
+        boolean comparess = false;
         for (int i = 1; i < tiles.length; i++) {
             for (int j = 1; j < tiles.length; j++) {
                 if (tiles[j - 1].isEmpty() && !tiles[j].isEmpty()) {
+                    comparess = true;
                     tiles[j - 1] = tiles[j];
                     tiles[j] = new Tile();
                 }
             }
         }
+        return comparess;
     }
 
-    private void mergeTiles(Tile[] tiles) {
+    private boolean mergeTiles(Tile[] tiles) {
+        boolean marge = false;
         for (int i = 1; i < tiles.length; i++) {
             if ((tiles[i - 1].value == tiles[i].value) && !tiles[i - 1].isEmpty() && !tiles[i].isEmpty()) {
+                marge = true;
                 tiles[i - 1].value *= 2;
                 score += tiles[i - 1].value;
                 maxTile = maxTile > tiles[i - 1].value ? maxTile : tiles[i - 1].value;
                 tiles[i] = new Tile();
                 compressTiles(tiles);
             }
+        }
+        return marge;
+    }
+
+    public void left() {
+        int j = 0;
+        for(Tile[] gameTile : gameTiles) {
+            if(compressTiles(gameTile) | mergeTiles(gameTile)) {
+                j++;
+            }
+        }
+
+        if(j != 0) {
+            addTile();
         }
     }
 }
