@@ -30,7 +30,7 @@ public class Model {
         addTile();
     }
 
-    private List<Tile> getEmptyTales() {
+    private List<Tile> getEmptyTiles() {
         List<Tile> emptyTiles = new ArrayList<>();
         for(int i = 0; i < FIELD_WIDTH; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
@@ -44,7 +44,7 @@ public class Model {
     }
 
     private void addTile() {
-        List<Tile> emptyTiles = getEmptyTales();
+        List<Tile> emptyTiles = getEmptyTiles();
         if(emptyTiles.size() != 0) {
             emptyTiles.get((int) (Math.random() * emptyTiles.size())).value = ((Math.random() < 0.9) ? 2 : 4);
         }
@@ -124,5 +124,27 @@ public class Model {
         rotate();
         rotate();
         rotate();
+    }
+
+    public boolean canMove() {
+        if (!getEmptyTiles().isEmpty())
+            return true;
+        for (Tile[] gameTile : gameTiles) {
+            for (int j = 1; j < gameTiles.length; j++) {
+                if (gameTile[j].value == gameTile[j - 1].value)
+                    return true;
+            }
+        }
+        for(int j = 0; j < gameTiles.length; j++) {
+            for(int i = 1; i < gameTiles.length; i++) {
+                if(gameTiles[i][j].value == gameTiles[i-1][j].value)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public Tile[][] getGameTiles() {
+        return gameTiles;
     }
 }
