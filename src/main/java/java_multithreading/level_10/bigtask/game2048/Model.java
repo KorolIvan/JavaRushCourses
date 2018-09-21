@@ -1,8 +1,6 @@
 package java_multithreading.level_10.bigtask.game2048;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author Ivan Korol on 9/11/2018
@@ -234,5 +232,16 @@ public class Model {
         }
         rollback();
         return moveEfficiency;
+    }
+
+    public void autoMove() {
+        PriorityQueue<MoveEfficiency> moveEfficiencies = new PriorityQueue<>(4, Collections.reverseOrder());
+
+        moveEfficiencies.offer(getMoveEfficiency(this::left));
+        moveEfficiencies.offer(getMoveEfficiency(this::up));
+        moveEfficiencies.offer(getMoveEfficiency(this::right));
+        moveEfficiencies.offer(getMoveEfficiency(this::down));
+
+        moveEfficiencies.peek().getMove().move();
     }
 }
