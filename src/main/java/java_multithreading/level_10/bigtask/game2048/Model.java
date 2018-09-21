@@ -22,8 +22,8 @@ public class Model {
     }
 
     protected void resetGameTiles() {
-        for(int i = 0; i < FIELD_WIDTH; i++) {
-            for(int j = 0; j < FIELD_WIDTH; j++){
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
                 gameTiles[i][j] = new Tile();
             }
         }
@@ -37,10 +37,10 @@ public class Model {
 
     private List<Tile> getEmptyTiles() {
         List<Tile> emptyTiles = new ArrayList<>();
-        for(int i = 0; i < FIELD_WIDTH; i++) {
+        for (int i = 0; i < FIELD_WIDTH; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
                 Tile tile = gameTiles[i][j];
-                if(tile.isEmpty()) {
+                if (tile.isEmpty()) {
                     emptyTiles.add(tile);
                 }
             }
@@ -50,7 +50,7 @@ public class Model {
 
     private void addTile() {
         List<Tile> emptyTiles = getEmptyTiles();
-        if(emptyTiles.size() != 0) {
+        if (emptyTiles.size() != 0) {
             emptyTiles.get((int) (Math.random() * emptyTiles.size())).value = ((Math.random() < 0.9) ? 2 : 4);
         }
     }
@@ -86,13 +86,13 @@ public class Model {
 
     public void left() {
         int j = 0;
-        for(Tile[] gameTile : gameTiles) {
-            if(compressTiles(gameTile) | mergeTiles(gameTile)) {
+        for (Tile[] gameTile : gameTiles) {
+            if (compressTiles(gameTile) | mergeTiles(gameTile)) {
                 j++;
             }
         }
 
-        if(j != 0) {
+        if (j != 0) {
             addTile();
         }
     }
@@ -102,17 +102,15 @@ public class Model {
             saveState(gameTiles);
         }
         Tile[][] rotateGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
-        for (int i = 0; i < FIELD_WIDTH; i++)
-        {
-            for (int j = 0; j < FIELD_WIDTH; j++)
-            {
-                rotateGameTiles[j][FIELD_WIDTH-1-i] = gameTiles[i][j];
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                rotateGameTiles[j][FIELD_WIDTH - 1 - i] = gameTiles[i][j];
             }
         }
         gameTiles = rotateGameTiles;
     }
 
-    public void up(){
+    public void up() {
         saveState(gameTiles);
         rotate();
         rotate();
@@ -120,7 +118,8 @@ public class Model {
         left();
         rotate();
     }
-    public void right(){
+
+    public void right() {
         saveState(gameTiles);
         rotate();
         rotate();
@@ -128,7 +127,8 @@ public class Model {
         rotate();
         rotate();
     }
-    public void down(){
+
+    public void down() {
         saveState(gameTiles);
         rotate();
         left();
@@ -146,9 +146,9 @@ public class Model {
                     return true;
             }
         }
-        for(int j = 0; j < gameTiles.length; j++) {
-            for(int i = 1; i < gameTiles.length; i++) {
-                if(gameTiles[i][j].value == gameTiles[i-1][j].value)
+        for (int j = 0; j < gameTiles.length; j++) {
+            for (int i = 1; i < gameTiles.length; i++) {
+                if (gameTiles[i][j].value == gameTiles[i - 1][j].value)
                     return true;
             }
         }
@@ -179,7 +179,7 @@ public class Model {
     }
 
     public void rollback() {
-        if(previousStates.isEmpty() | previousScores.isEmpty()){
+        if (previousStates.isEmpty() | previousScores.isEmpty()) {
             return;
         }
 
@@ -191,5 +191,23 @@ public class Model {
             }
         }
         gameTiles = previousStates.pop();
+    }
+
+    public void randomMove() {
+        int n = ((int) (Math.random() * 100)) % 4;
+        switch (n) {
+            case 0:
+                left();
+                break;
+            case 1:
+                right();
+                break;
+            case 2:
+                up();
+                break;
+            case 3:
+                down();
+                break;
+        }
     }
 }
