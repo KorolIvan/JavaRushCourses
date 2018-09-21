@@ -1,10 +1,10 @@
-package java_multithreading.level_9.lesson_9.restaurant.statistic;
+package java_multithreading.level_9.restaurant.statistic;
 
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Cook;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.CookedOrderEventDataRow;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.EventDataRow;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.EventType;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.VideoSelectedEventDataRow;
+import java_multithreading.level_9.restaurant.kitchen.Cook;
+import java_multithreading.level_9.restaurant.statistic.event.CookedOrderEventDataRow;
+import java_multithreading.level_9.restaurant.statistic.event.EventDataRow;
+import java_multithreading.level_9.restaurant.statistic.event.EventType;
+import java_multithreading.level_9.restaurant.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.*;
 

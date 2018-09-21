@@ -1,4 +1,4 @@
-package java_multithreading.level_9.lesson_9.restaurant.ad;
+package java_multithreading.level_9.restaurant.ad;
 
 import java.util.ArrayList;
 import java.util.List;

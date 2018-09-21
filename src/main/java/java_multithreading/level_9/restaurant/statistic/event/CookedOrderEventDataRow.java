@@ -1,6 +1,6 @@
-package java_multithreading.level_9.lesson_9.restaurant.statistic.event;
+package java_multithreading.level_9.restaurant.statistic.event;
 
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Dish;
+import java_multithreading.level_9.restaurant.kitchen.Dish;
 
 import java.util.Date;
 import java.util.List;

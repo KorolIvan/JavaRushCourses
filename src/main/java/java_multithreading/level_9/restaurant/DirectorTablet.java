@@ -1,8 +1,8 @@
-package java_multithreading.level_9.lesson_9.restaurant;
+package java_multithreading.level_9.restaurant;
 
-import java_multithreading.level_9.lesson_9.restaurant.ad.Advertisement;
-import java_multithreading.level_9.lesson_9.restaurant.ad.StatisticAdvertisementManager;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
+import java_multithreading.level_9.restaurant.ad.Advertisement;
+import java_multithreading.level_9.restaurant.ad.StatisticAdvertisementManager;
+import java_multithreading.level_9.restaurant.statistic.StatisticManager;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

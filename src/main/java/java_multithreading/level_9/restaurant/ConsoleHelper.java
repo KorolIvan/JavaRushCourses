@@ -1,6 +1,6 @@
-package java_multithreading.level_9.lesson_9.restaurant;
+package java_multithreading.level_9.restaurant;
 
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Dish;
+import java_multithreading.level_9.restaurant.kitchen.Dish;
 
 import java.io.BufferedReader;
 import java.io.IOException;

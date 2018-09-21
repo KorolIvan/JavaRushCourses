@@ -1,4 +1,4 @@
-package java_multithreading.level_9.lesson_9.restaurant.statistic.event;
+package java_multithreading.level_9.restaurant.statistic.event;
 
 import java.util.Date;
 

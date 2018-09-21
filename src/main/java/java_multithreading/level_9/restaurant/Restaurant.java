@@ -1,9 +1,9 @@
-package java_multithreading.level_9.lesson_9.restaurant;
+package java_multithreading.level_9.restaurant;
 
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Cook;
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Order;
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Waiter;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
+import java_multithreading.level_9.restaurant.kitchen.Cook;
+import java_multithreading.level_9.restaurant.kitchen.Order;
+import java_multithreading.level_9.restaurant.kitchen.Waiter;
+import java_multithreading.level_9.restaurant.statistic.StatisticManager;
 
 import java.util.ArrayList;
 import java.util.List;

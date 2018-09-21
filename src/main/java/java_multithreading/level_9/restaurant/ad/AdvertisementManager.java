@@ -1,9 +1,9 @@
-package java_multithreading.level_9.lesson_9.restaurant.ad;
+package java_multithreading.level_9.restaurant.ad;
 
-import java_multithreading.level_9.lesson_9.restaurant.ConsoleHelper;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.StatisticManager;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.NoAvailableVideoEventDataRow;
-import java_multithreading.level_9.lesson_9.restaurant.statistic.event.VideoSelectedEventDataRow;
+import java_multithreading.level_9.restaurant.ConsoleHelper;
+import java_multithreading.level_9.restaurant.statistic.StatisticManager;
+import java_multithreading.level_9.restaurant.statistic.event.NoAvailableVideoEventDataRow;
+import java_multithreading.level_9.restaurant.statistic.event.VideoSelectedEventDataRow;
 
 import java.util.ArrayList;
 import java.util.Collections;

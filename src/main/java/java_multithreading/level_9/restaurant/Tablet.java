@@ -1,9 +1,9 @@
-package java_multithreading.level_9.lesson_9.restaurant;
+package java_multithreading.level_9.restaurant;
 
-import java_multithreading.level_9.lesson_9.restaurant.ad.AdvertisementManager;
-import java_multithreading.level_9.lesson_9.restaurant.ad.NoVideoAvailableException;
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.Order;
-import java_multithreading.level_9.lesson_9.restaurant.kitchen.TestOrder;
+import java_multithreading.level_9.restaurant.ad.AdvertisementManager;
+import java_multithreading.level_9.restaurant.ad.NoVideoAvailableException;
+import java_multithreading.level_9.restaurant.kitchen.Order;
+import java_multithreading.level_9.restaurant.kitchen.TestOrder;
 
 import java.io.IOException;
 import java.util.Observable;

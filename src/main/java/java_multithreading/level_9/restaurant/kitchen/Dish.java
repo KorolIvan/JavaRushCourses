@@ -1,4 +1,4 @@
-package java_multithreading.level_9.lesson_9.restaurant.kitchen;
+package java_multithreading.level_9.restaurant.kitchen;
 
 import java.util.Arrays;
 
