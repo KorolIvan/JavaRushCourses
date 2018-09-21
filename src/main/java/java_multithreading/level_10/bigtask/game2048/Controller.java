@@ -24,13 +24,13 @@ public class Controller extends KeyAdapter {
     }
 
     public void keyPressed(KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resetGame();
         }
-        if(!model.canMove()) {
+        if (!model.canMove()) {
             view.isGameLost = true;
         }
-        if(!view.isGameLost && !view.isGameWon) {
+        if (!view.isGameLost && !view.isGameWon) {
             switch (event.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     model.up();
@@ -44,9 +44,13 @@ public class Controller extends KeyAdapter {
                 case KeyEvent.VK_RIGHT:
                     model.right();
                     break;
+                case KeyEvent.VK_Z:
+                    model.rollback();
+                    break;
             }
         }
-        if(model.maxTile == WINNING_TILE) {
+
+        if (model.maxTile == WINNING_TILE) {
             view.isGameWon = true;
         }
         view.repaint();

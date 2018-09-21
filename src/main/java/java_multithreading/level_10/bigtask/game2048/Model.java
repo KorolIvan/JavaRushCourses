@@ -98,6 +98,9 @@ public class Model {
     }
 
     public void rotate() {
+        if (isSaveNeeded) {
+            saveState(gameTiles);
+        }
         Tile[][] rotateGameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
         for (int i = 0; i < FIELD_WIDTH; i++)
         {
@@ -110,6 +113,7 @@ public class Model {
     }
 
     public void up(){
+        saveState(gameTiles);
         rotate();
         rotate();
         rotate();
@@ -117,6 +121,7 @@ public class Model {
         rotate();
     }
     public void right(){
+        saveState(gameTiles);
         rotate();
         rotate();
         left();
@@ -124,6 +129,7 @@ public class Model {
         rotate();
     }
     public void down(){
+        saveState(gameTiles);
         rotate();
         left();
         rotate();
