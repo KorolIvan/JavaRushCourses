@@ -2,6 +2,7 @@ package java_multithreading.level_10.bigtask.game2048;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Ivan Korol on 9/11/2018
@@ -11,9 +12,13 @@ public class Model {
     private Tile[][] gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
     protected int score;
     protected int maxTile;
+    private Stack<Tile[][]> previousStates = new Stack<>();
+    private Stack<Integer> previousScores = new Stack<>();
+    private boolean isSaveNeeded;
 
     public Model() {
         resetGameTiles();
+        isSaveNeeded = true;
     }
 
     protected void resetGameTiles() {
@@ -146,5 +151,39 @@ public class Model {
 
     public Tile[][] getGameTiles() {
         return gameTiles;
+    }
+
+    private void saveState(Tile[][] tiles) {
+        Tile[][] temp = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                temp[i][j] = new Tile();
+            }
+        }
+
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                temp[i][j].value = tiles[i][j].value;
+            }
+        }
+
+        previousStates.push(temp);
+        previousScores.push(score);
+        this.isSaveNeeded = false;
+    }
+
+    public void rollback() {
+        if(previousStates.isEmpty() | previousScores.isEmpty()){
+            return;
+        }
+
+        score = previousScores.pop();
+
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                gameTiles[i][j].value = previousStates.peek()[i][j].value;
+            }
+        }
+        gameTiles = previousStates.pop();
     }
 }
